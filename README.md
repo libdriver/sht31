@@ -4,7 +4,7 @@
 
 ## LibDriver SHT31
 
-[English](/README.md) | [ 简体中文](/README_CN.md)
+[English](/README.md) | [ 简体中文](/README_zh-Hans.md) | [繁體中文](/README_zh-Hant.md)
 
 SHT31 is the next generation of Sensirion's temperature and humidity sensors. It builds on a new CMOSens sensor chip that is at the heart of Sensirion's new humidity and temperature platform. The SHT31 has increased intelligence, reliability and improved accuracy specifications compared to its predecessor. Its functionality includes enhanced signal processing, two distinctive and user selectable IIC addresses and communication speeds of up to 1 MHz. The DFN package has a footprint of 2.5 x 2.5 mm2 while keeping a height of 0.9 mm. This allows for integration of the SHT31 into a great variety of applications. Additionally, the wide supply voltage range of 2.4 V to 5.5 V guarantees compatibility with diverse assembly situations. All in all, the SHT31 incorporates 15 years of knowledge of Sensirion, the leader in the humidity sensor industry.
 
@@ -138,7 +138,7 @@ Please sent an e-mail to lishifenging@outlook.com
 
 ### License
 
-Copyright (C) LibDriver 2015-2021 All rights reserved 
+Copyright (c) 2015 - present LibDriver All rights reserved
 
 
 
