@@ -52,14 +52,14 @@
 /**
  * @brief chip command definition
  */
-#define SHT31_COMMAND_FETCH_DATA            0xE000        /**< fetch data command */
-#define SHT31_COMMAND_ART                   0x2B32        /**< art command */
-#define SHT31_COMMAND_BREAK                 0x3093        /**< break command */
-#define SHT31_COMMAND_SOFT_RESET            0x30A2        /**< soft reset command */
-#define SHT31_COMMAND_HEATER_ENABLE         0x306D        /**< heater enable command */
-#define SHT31_COMMAND_HEATER_DISABLE        0x3066        /**< heater disable command */
-#define SHT31_COMMAND_READ_STATUS           0xF32D        /**< read status command */
-#define SHT31_COMMAND_CLEAR_STATUS          0x3041        /**< clear status command */
+#define SHT31_COMMAND_FETCH_DATA            0xE000U        /**< fetch data command */
+#define SHT31_COMMAND_ART                   0x2B32U        /**< art command */
+#define SHT31_COMMAND_BREAK                 0x3093U        /**< break command */
+#define SHT31_COMMAND_SOFT_RESET            0x30A2U        /**< soft reset command */
+#define SHT31_COMMAND_HEATER_ENABLE         0x306DU        /**< heater enable command */
+#define SHT31_COMMAND_HEATER_DISABLE        0x3066U        /**< heater disable command */
+#define SHT31_COMMAND_READ_STATUS           0xF32DU        /**< read status command */
+#define SHT31_COMMAND_CLEAR_STATUS          0x3041U        /**< clear status command */
 
 /**
  * @brief     write the command
@@ -70,10 +70,16 @@
  *            - 1 write failed
  * @note      none
  */
-static uint8_t _sht31_write(sht31_handle_t *handle, uint16_t cmd)
+static uint8_t a_sht31_write(sht31_handle_t *handle, uint16_t cmd)
 {
-    /* write command */
-    return handle->iic_write_address16(handle->iic_addr, cmd, NULL, 0);
+    if (handle->iic_write_address16(handle->iic_addr, cmd, NULL, 0) != 0)        /* iic write */
+    {
+        return 1;                                                                /* return error */
+    }
+    else
+    {
+        return 0;                                                                /* success return 0 */
+    }
 }
 
 /**
@@ -87,10 +93,16 @@ static uint8_t _sht31_write(sht31_handle_t *handle, uint16_t cmd)
  *             - 1 read failed
  * @note       none
  */
-static uint8_t _sht31_read(sht31_handle_t *handle, uint16_t reg, uint8_t *data, uint16_t len)
+static uint8_t a_sht31_read(sht31_handle_t *handle, uint16_t reg, uint8_t *data, uint16_t len)
 {
-    /* read data */
-    return handle->iic_read_address16(handle->iic_addr, reg, data, len);
+    if (handle->iic_read_address16(handle->iic_addr, reg, data, len) != 0)        /* iic read */
+    {
+        return 1;                                                                 /* return error */
+    }
+    else
+    {                                                                             /* success return 0 */
+        return 0;
+    }
 }
 
 /**
@@ -100,22 +112,22 @@ static uint8_t _sht31_read(sht31_handle_t *handle, uint16_t reg, uint8_t *data, 
  * @return    crc
  * @note      none
  */
-static uint8_t _sht31_crc(uint8_t *data, uint16_t len)
+static uint8_t a_sht31_crc(uint8_t *data, uint16_t len)
 {
     const uint8_t POLYNOMIAL = 0x31;
-    volatile uint8_t crc = 0xFF;
-    volatile uint8_t i, j;
+    uint8_t crc = 0xFF;
+    uint16_t i, j;
   
-    for (j = len; j; --j) 
+    for (j = len; j != 0; --j)                                              /* length-- */
     {
-        crc ^= *data++;
-        for (i = 8; i; --i) 
+        crc ^= *data++;                                                     /* xor */
+        for (i = 8; i != 0; --i)                                            /* 8 times */
         {
-            crc = (crc&0x80) ? (crc<<1)^POLYNOMIAL : (crc<<1);        /* calculate crc */
+            crc = (crc & 0x80) ? (crc << 1) ^ POLYNOMIAL : (crc<<1);        /* calculate crc */
         }
     }
   
-    return crc;                                                       /* return crc */
+    return crc;                                                             /* return crc */
 }
 
 /**
@@ -130,8 +142,8 @@ static uint8_t _sht31_crc(uint8_t *data, uint16_t len)
  */
 uint8_t sht31_init(sht31_handle_t *handle)
 {
-    volatile uint8_t res;
-    volatile uint16_t command;
+    uint8_t res;
+    uint16_t command;
     
     if (handle == NULL)                                                      /* check handle */
     {
@@ -172,18 +184,18 @@ uint8_t sht31_init(sht31_handle_t *handle)
         return 3;                                                            /* return error */
     }
     
-    if (handle->iic_init())                                                  /* iic init */
+    if (handle->iic_init() != 0)                                             /* iic init */
     {
         handle->debug_print("sht31: iic init failed.\n");                    /* iic init failed */
        
         return 1;                                                            /* return error */
     }
     command = SHT31_COMMAND_SOFT_RESET;                                      /* set command */
-    res = _sht31_write(handle, command);                                     /* write command */
-    if (res)                                                                 /* check result */
+    res = a_sht31_write(handle, command);                                    /* write command */
+    if (res != 0)                                                            /* check result */
     {
         handle->debug_print("sht31: write command failed.\n");               /* write command failed */
-        handle->iic_deinit();                                                /* close iic */
+        (void)handle->iic_deinit();                                          /* close iic */
         
         return 1;                                                            /* return error */
     }
@@ -204,8 +216,8 @@ uint8_t sht31_init(sht31_handle_t *handle)
  */
 uint8_t sht31_deinit(sht31_handle_t *handle)
 {
-    volatile uint8_t res;
-    volatile uint16_t command;
+    uint8_t res;
+    uint16_t command;
     
     if (handle == NULL)                                               /* check handle */
     {
@@ -217,14 +229,14 @@ uint8_t sht31_deinit(sht31_handle_t *handle)
     }
     
     command = SHT31_COMMAND_BREAK;                                    /* set command */
-    res = _sht31_write(handle, command);                              /* write command */
-    if (res)                                                          /* check result */
+    res = a_sht31_write(handle, command);                             /* write command */
+    if (res != 0)                                                     /* check result */
     {
         handle->debug_print("sht31: write command failed.\n");        /* write command failed */
         
         return 1;                                                     /* return error */
     }
-    if (handle->iic_deinit())                                         /* iic deinit */
+    if (handle->iic_deinit() != 0)                                    /* iic deinit */
     {
         handle->debug_print("sht31: iic deinit failed.\n");           /* iic deinit failed */
        
@@ -247,14 +259,14 @@ uint8_t sht31_deinit(sht31_handle_t *handle)
  */
 uint8_t sht31_set_addr_pin(sht31_handle_t *handle, sht31_address_t addr_pin) 
 {
-    if (handle == NULL)                 /* check handle */
+    if (handle == NULL)                          /* check handle */
     {
-        return 2;                       /* return error */
+        return 2;                                /* return error */
     }
     
-    handle->iic_addr = addr_pin;        /* set address pin */
+    handle->iic_addr = (uint8_t)addr_pin;        /* set address pin */
     
-    return 0;                           /* success return 0 */
+    return 0;                                    /* success return 0 */
 }
 
 /**
@@ -291,9 +303,9 @@ uint8_t sht31_get_addr_pin(sht31_handle_t *handle, sht31_address_t *addr_pin)
  */
 uint8_t sht31_get_status(sht31_handle_t *handle, uint16_t *status) 
 {
-    volatile uint8_t res;
-    volatile uint8_t data[3];
-    volatile uint16_t command;
+    uint8_t res;
+    uint8_t data[3];
+    uint16_t command;
     
     if (handle == NULL)                                             /* check handle */
     {
@@ -304,17 +316,18 @@ uint8_t sht31_get_status(sht31_handle_t *handle, uint16_t *status)
         return 3;                                                   /* return error */
     }
     
+    memset(data, 0, sizeof(uint8_t) * 3);                           /* clear the buffer */
     command = SHT31_COMMAND_READ_STATUS;                            /* set command */
-    res = _sht31_read(handle, command, (uint8_t *)&data, 3);        /* read status */
-    if (res)                                                        /* check result */
+    res = a_sht31_read(handle, command, (uint8_t *)data, 3);        /* read status */
+    if (res != 0)                                                   /* check result */
     {
         handle->debug_print("sht31: read status failed.\n");        /* read status failed */
        
         return 1;                                                   /* return error */
     }
-    if (_sht31_crc((uint8_t *)data, 2) == data[2])                  /* check crc */
+    if (a_sht31_crc((uint8_t *)data, 2) == data[2])                 /* check crc */
     {
-        *status = (data[0] << 8) | data[1];                         /* get status */
+        *status = (uint16_t)((((uint16_t)data[0]) << 8) | data[1]); /* get status */
         
         return 0;                                                   /* success return 0 */
     }
@@ -337,8 +350,8 @@ uint8_t sht31_get_status(sht31_handle_t *handle, uint16_t *status)
  */
 uint8_t sht31_clear_status(sht31_handle_t *handle)
 {
-    volatile uint8_t res;
-    volatile uint16_t command;
+    uint8_t res;
+    uint16_t command;
     
     if (handle == NULL)                                               /* check handle */
     {
@@ -350,8 +363,8 @@ uint8_t sht31_clear_status(sht31_handle_t *handle)
     }
     
     command = SHT31_COMMAND_CLEAR_STATUS;                             /* set command */
-    res = _sht31_write(handle, command);                              /* write command */
-    if (res)                                                          /* check result */
+    res = a_sht31_write(handle, command);                             /* write command */
+    if (res != 0)                                                     /* check result */
     {
         handle->debug_print("sht31: write command failed.\n");        /* write command failed */
            
@@ -373,18 +386,18 @@ uint8_t sht31_clear_status(sht31_handle_t *handle)
  */
 uint8_t sht31_set_repeatability(sht31_handle_t *handle, sht31_repeatability_t repeatability) 
 {
-    if (handle == NULL)                           /* check handle */
+    if (handle == NULL)                                    /* check handle */
     {
-        return 2;                                 /* return error */
+        return 2;                                          /* return error */
     }
-    if (handle->inited != 1)                      /* check handle initialization */
+    if (handle->inited != 1)                               /* check handle initialization */
     {
-        return 3;                                 /* return error */
+        return 3;                                          /* return error */
     }
     
-    handle->repeatability = repeatability;        /* set repeatability */
+    handle->repeatability = (uint8_t)repeatability;        /* set repeatability */
     
-    return 0;                                     /* success return 0 */
+    return 0;                                              /* success return 0 */
 }
 
 /**
@@ -399,8 +412,6 @@ uint8_t sht31_set_repeatability(sht31_handle_t *handle, sht31_repeatability_t re
  */
 uint8_t sht31_get_repeatability(sht31_handle_t *handle, sht31_repeatability_t *repeatability) 
 {
-    volatile uint8_t res;
-    
     if (handle == NULL)                                                     /* check handle */
     {
         return 2;                                                           /* return error */
@@ -435,9 +446,9 @@ uint8_t sht31_single_read(sht31_handle_t *handle, sht31_bool_t clock_stretching_
                           uint16_t *humidity_raw, float *humidity_s
                          )
 {
-    volatile uint8_t res;
-    volatile uint16_t command;
-    volatile uint8_t data[6];
+    uint8_t res;
+    uint16_t command;
+    uint8_t data[6];
     
     if (handle == NULL)                                                            /* check handle */
     {
@@ -452,11 +463,11 @@ uint8_t sht31_single_read(sht31_handle_t *handle, sht31_bool_t clock_stretching_
     {
         if (clock_stretching_enable == SHT31_BOOL_FALSE)                           /* if disable clock stretching */
         {
-            command = 0x2400;                                                      /* set disable high */
+            command = 0x2400U;                                                     /* set disable high */
         }
         else if (clock_stretching_enable == SHT31_BOOL_TRUE)                       /* if enable clock stretching */
         {
-            command = 0x2C06;                                                      /* set enable high */
+            command = 0x2C06U;                                                     /* set enable high */
         }
         else
         {
@@ -469,11 +480,11 @@ uint8_t sht31_single_read(sht31_handle_t *handle, sht31_bool_t clock_stretching_
     {
         if (clock_stretching_enable == SHT31_BOOL_FALSE)                           /* if disable clock stretching */
         {
-            command = 0x240B;                                                      /* set disable medium */
+            command = 0x240BU;                                                     /* set disable medium */
         }
         else if (clock_stretching_enable == SHT31_BOOL_TRUE)                       /* if enable clock stretching */
         {
-            command = 0x2C0D;                                                      /* set enable medium */
+            command = 0x2C0DU;                                                     /* set enable medium */
         }
         else
         {
@@ -486,11 +497,11 @@ uint8_t sht31_single_read(sht31_handle_t *handle, sht31_bool_t clock_stretching_
     {
         if (clock_stretching_enable == SHT31_BOOL_FALSE)                           /* if disable clock stretching */
         {
-            command = 0x2416;                                                      /* set disable low */
+            command = 0x2416U;                                                     /* set disable low */
         }
         else if (clock_stretching_enable == SHT31_BOOL_TRUE)                       /* if enable clock stretching */
         {
-            command = 0x2C10;                                                      /* set enable low */
+            command = 0x2C10U;                                                     /* set enable low */
         }
         else
         {
@@ -505,27 +516,28 @@ uint8_t sht31_single_read(sht31_handle_t *handle, sht31_bool_t clock_stretching_
        
         return 1;                                                                  /* return error */
     }
-    res = _sht31_read(handle, command, (uint8_t *)&data, 6);                       /* read data */
-    if (res)                                                                       /* check result */
+    memset(data, 0, sizeof(uint8_t) * 6);                                          /* clear the buffer */
+    res = a_sht31_read(handle, command, (uint8_t *)data, 6);                       /* read data */
+    if (res != 0)                                                                  /* check result */
     {
         handle->debug_print("sht31: read data failed.\n");                         /* read data failed */
        
         return 1;                                                                  /* return error */
     }
-    if (_sht31_crc((uint8_t *)data, 2) != data[2])                                 /* check crc */
+    if (a_sht31_crc((uint8_t *)data, 2) != data[2])                                /* check crc */
     {
         handle->debug_print("sht31: crc check failed.\n");                         /* crc check failed */
        
         return 1;                                                                  /* return error */
     }
-    if (_sht31_crc((uint8_t *)&data[3], 2) != data[5])                             /* check crc */
+    if (a_sht31_crc((uint8_t *)&data[3], 2) != data[5])                            /* check crc */
     {
         handle->debug_print("sht31: crc check failed.\n");                         /* crc check failed */
        
         return 1;                                                                  /* return error */
     }
-    *temperature_raw = (data[0] << 8) | data[1];                                   /* get raw temperature */
-    *humidity_raw = (data[3] << 8) | data[4];                                      /* get raw humidity */
+    *temperature_raw = (uint16_t)((((uint16_t)data[0]) << 8) | data[1]);           /* get raw temperature */
+    *humidity_raw = (uint16_t)((((uint16_t)data[3]) << 8) | data[4]);              /* get raw humidity */
     *temperature_s = (float)(*temperature_raw) / 65535.0f * 175.0f - 45.0f;        /* convert raw temperature */
     *humidity_s = (float)(*humidity_raw) / 65535.0f *100.0f;                       /* convert raw humidity */
     
@@ -545,8 +557,8 @@ uint8_t sht31_single_read(sht31_handle_t *handle, sht31_bool_t clock_stretching_
  */
 uint8_t sht31_start_continuous_read(sht31_handle_t *handle, sht31_rate_t rate)
 {
-    volatile uint8_t res;
-    volatile uint16_t command;
+    uint8_t res;
+    uint16_t command;
     
     if (handle == NULL)                                                  /* check handle */
     {
@@ -561,23 +573,23 @@ uint8_t sht31_start_continuous_read(sht31_handle_t *handle, sht31_rate_t rate)
     {
         if (rate == SHT31_RATE_0P5HZ)                                    /* 0.5Hz */
         {
-            command = 0x2032;                                            /* set 0.5Hz high */
+            command = 0x2032U;                                           /* set 0.5Hz high */
         }
         else if (rate == SHT31_RATE_1HZ)                                 /* 1Hz */
         {
-            command = 0x2130;                                            /* set 1Hz high */
+            command = 0x2130U;                                           /* set 1Hz high */
         }
         else if (rate == SHT31_RATE_2HZ)                                 /* 2Hz */
         {
-            command = 0x2236;                                            /* set 2Hz high */
+            command = 0x2236U;                                           /* set 2Hz high */
         }
         else if (rate == SHT31_RATE_4HZ)                                 /* 4Hz */
         {
-            command = 0x2334;                                            /* set 4Hz high */
+            command = 0x2334U;                                           /* set 4Hz high */
         }
         else if (rate == SHT31_RATE_10HZ)                                /* 10Hz */
         {
-            command = 0x2737;                                            /* set 10Hz high */
+            command = 0x2737U;                                           /* set 10Hz high */
         }
         else
         {
@@ -590,23 +602,23 @@ uint8_t sht31_start_continuous_read(sht31_handle_t *handle, sht31_rate_t rate)
     {
         if (rate == SHT31_RATE_0P5HZ)                                    /* 0.5Hz */
         {
-            command = 0x2024;                                            /* set 0.5Hz medium */
+            command = 0x2024U;                                           /* set 0.5Hz medium */
         }
         else if (rate == SHT31_RATE_1HZ)                                 /* 1Hz */
         {
-            command = 0x2126;                                            /* set 1Hz medium */
+            command = 0x2126U;                                           /* set 1Hz medium */
         }
         else if (rate == SHT31_RATE_2HZ)                                 /* 2Hz */
         {
-            command = 0x2220;                                            /* set 2Hz medium */
+            command = 0x2220U;                                           /* set 2Hz medium */
         }
         else if (rate == SHT31_RATE_4HZ)                                 /* 4Hz */
         {
-            command = 0x2322;                                            /* set 4Hz medium */
+            command = 0x2322U;                                           /* set 4Hz medium */
         }
         else if (rate == SHT31_RATE_10HZ)                                /* 10Hz */
         {
-            command = 0x2721;                                            /* set 10Hz medium */
+            command = 0x2721U;                                           /* set 10Hz medium */
         }
         else
         {
@@ -619,23 +631,23 @@ uint8_t sht31_start_continuous_read(sht31_handle_t *handle, sht31_rate_t rate)
     {
         if (rate == SHT31_RATE_0P5HZ)                                    /* 0.5Hz */
         {
-            command = 0x202F;                                            /* set 0.5Hz low */
+            command = 0x202FU;                                           /* set 0.5Hz low */
         }
         else if (rate == SHT31_RATE_1HZ)                                 /* 1Hz */
         {
-            command = 0x212D;                                            /* set 1Hz low */
+            command = 0x212DU;                                           /* set 1Hz low */
         }
         else if (rate == SHT31_RATE_2HZ)                                 /* 2Hz */
         {
-            command = 0x222B;                                            /* set 2Hz low */
+            command = 0x222BU;                                           /* set 2Hz low */
         }
         else if (rate == SHT31_RATE_4HZ)                                 /* set 4Hz */
         {
-            command = 0x2329;                                            /* set 4Hz low */
+            command = 0x2329U;                                           /* set 4Hz low */
         }
         else if (rate == SHT31_RATE_10HZ)                                /* 10Hz */
         {
-            command = 0x272A;                                            /* set 10Hz low */
+            command = 0x272AU;                                           /* set 10Hz low */
         }
         else
         {
@@ -650,8 +662,8 @@ uint8_t sht31_start_continuous_read(sht31_handle_t *handle, sht31_rate_t rate)
        
         return 1;                                                        /* return error */
     }
-    res = _sht31_write(handle, command);                                 /* write command */
-    if (res)                                                             /* check result */
+    res = a_sht31_write(handle, command);                                /* write command */
+    if (res != 0)                                                        /* check result */
     {
         handle->debug_print("sht31: write command failed.\n");           /* write command failed */
            
@@ -673,8 +685,8 @@ uint8_t sht31_start_continuous_read(sht31_handle_t *handle, sht31_rate_t rate)
  */
 uint8_t sht31_stop_continuous_read(sht31_handle_t *handle)
 {
-    volatile uint8_t res;
-    volatile uint16_t command;
+    uint8_t res;
+    uint16_t command;
     
     if (handle == NULL)                                               /* check handle */
     {
@@ -686,8 +698,8 @@ uint8_t sht31_stop_continuous_read(sht31_handle_t *handle)
     }
     
     command = SHT31_COMMAND_BREAK;                                    /* set command */
-    res = _sht31_write(handle, command);                              /* write command */
-    if (res)                                                          /* check result */
+    res = a_sht31_write(handle, command);                             /* write command */
+    if (res != 0)                                                     /* check result */
     {
         handle->debug_print("sht31: write command failed.\n");        /* write command failed */
            
@@ -715,9 +727,9 @@ uint8_t sht31_continuous_read(sht31_handle_t *handle,
                               uint16_t *temperature_raw, float *temperature_s, 
                               uint16_t *humidity_raw, float *humidity_s)
 {
-    volatile uint8_t res;
-    volatile uint16_t command;
-    volatile uint8_t data[6];
+    uint8_t res;
+    uint16_t command;
+    uint8_t data[6];
     
     if (handle == NULL)                                                            /* check handle */
     {
@@ -729,27 +741,27 @@ uint8_t sht31_continuous_read(sht31_handle_t *handle,
     }
     
     command = SHT31_COMMAND_FETCH_DATA;                                            /* set fetch data */
-    res = _sht31_read(handle, command, (uint8_t *)&data, 6);                       /* read data */
-    if (res)                                                                       /* check result */
+    res = a_sht31_read(handle, command, (uint8_t *)data, 6);                       /* read data */
+    if (res != 0)                                                                  /* check result */
     {
         handle->debug_print("sht31: read data failed.\n");                         /* read data failed */
        
         return 1;                                                                  /* return error */
     }
-    if (_sht31_crc((uint8_t *)data, 2) != data[2])                                 /* check crc */
+    if (a_sht31_crc((uint8_t *)data, 2) != data[2])                                /* check crc */
     {
         handle->debug_print("sht31: crc check failed.\n");                         /* crc check failed */
        
         return 1;                                                                  /* return error */
     }
-    if (_sht31_crc((uint8_t *)&data[3], 2) != data[5])                             /* check crc */
+    if (a_sht31_crc((uint8_t *)&data[3], 2) != data[5])                            /* check crc */
     {
         handle->debug_print("sht31: crc check failed.\n");                         /* crc check failed */
        
         return 1;                                                                  /* return error */
     }
-    *temperature_raw = (data[0] << 8) | data[1];                                   /* get raw temperature */
-    *humidity_raw = (data[3] << 8) | data[4];                                      /* get raw humidity */
+    *temperature_raw = (uint16_t)((((uint16_t)data[0]) << 8) | data[1]);           /* get raw temperature */
+    *humidity_raw = (uint16_t)((((uint16_t)data[3]) << 8) | data[4]);              /* get raw humidity */
     *temperature_s = (float)(*temperature_raw) / 65535.0f * 175.0f - 45.0f;        /* convert raw temperature */
     *humidity_s = (float)(*humidity_raw) / 65535.0f *100.0f;                       /* convert raw humidity */
     
@@ -768,8 +780,8 @@ uint8_t sht31_continuous_read(sht31_handle_t *handle,
  */
 uint8_t sht31_set_art(sht31_handle_t *handle)
 {
-    volatile uint8_t res;
-    volatile uint16_t command;
+    uint8_t res;
+    uint16_t command;
     
     if (handle == NULL)                                               /* check handle */
     {
@@ -781,8 +793,8 @@ uint8_t sht31_set_art(sht31_handle_t *handle)
     }
     
     command = SHT31_COMMAND_ART;                                      /* set command */
-    res = _sht31_write(handle, command);                              /* write command */
-    if (res)                                                          /* check result */
+    res = a_sht31_write(handle, command);                             /* write command */
+    if (res != 0)                                                     /* check result */
     {
         handle->debug_print("sht31: write command failed.\n");        /* write command failed */
            
@@ -804,8 +816,8 @@ uint8_t sht31_set_art(sht31_handle_t *handle)
  */
 uint8_t sht31_soft_reset(sht31_handle_t *handle)
 {
-    volatile uint8_t res;
-    volatile uint16_t command;
+    uint8_t res;
+    uint16_t command;
     
     if (handle == NULL)                                               /* check handle */
     {
@@ -817,8 +829,8 @@ uint8_t sht31_soft_reset(sht31_handle_t *handle)
     }
     
     command = SHT31_COMMAND_SOFT_RESET;                               /* set command */
-    res = _sht31_write(handle, command);                              /* write command */
-    if (res)                                                          /* check result */
+    res = a_sht31_write(handle, command);                             /* write command */
+    if (res != 0)                                                     /* check result */
     {
         handle->debug_print("sht31: write command failed.\n");        /* write command failed */
            
@@ -841,8 +853,8 @@ uint8_t sht31_soft_reset(sht31_handle_t *handle)
  */
 uint8_t sht31_set_heater(sht31_handle_t *handle, sht31_bool_t enable)
 {
-    volatile uint8_t res;
-    volatile uint16_t command;
+    uint8_t res;
+    uint16_t command;
     
     if (handle == NULL)                                               /* check handle */
     {
@@ -867,8 +879,8 @@ uint8_t sht31_set_heater(sht31_handle_t *handle, sht31_bool_t enable)
            
         return 1;                                                     /* return error */
     }
-    res = _sht31_write(handle, command);                              /* write command */
-    if (res)                                                          /* check result */
+    res = a_sht31_write(handle, command);                             /* write command */
+    if (res != 0)                                                     /* check result */
     {
         handle->debug_print("sht31: write command failed.\n");        /* write command failed */
            
@@ -900,7 +912,7 @@ uint8_t sht31_set_reg(sht31_handle_t *handle, uint16_t command)
         return 3;                                /* return error */
     }
     
-    return _sht31_write(handle, command);        /* write command */
+    return a_sht31_write(handle, command);       /* write command */
 }
 
 /**
@@ -927,7 +939,7 @@ uint8_t sht31_get_reg(sht31_handle_t *handle, uint16_t command, uint8_t *buf, ui
         return 3;                                         /* return error */
     }
     
-    return _sht31_read(handle, command, buf, len);        /* read data */
+    return a_sht31_read(handle, command, buf, len);       /* read data */
 }
 
 /**

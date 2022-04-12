@@ -1,4 +1,4 @@
-[English](/README.md) | [ 简体中文](/README_zh-Hans.md) | [繁體中文](/README_zh-Hant.md)
+[English](/README.md) | [ 简体中文](/README_zh-Hans.md) | [繁體中文](/README_zh-Hant.md) | [日本語](/README_ja.md) | [Deutsch](/README_de.md) | [한국어](/README_ko.md)
 
 <div align=center>
 <img src="/doc/image/logo.png"/>
@@ -6,11 +6,11 @@
 
 ## LibDriver SHT31
 
-[![API](https://img.shields.io/badge/api-reference-blue)](https://www.libdriver.com/docs/sht31/index.html) [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](/LICENSE)
+[![MISRA](https://img.shields.io/badge/misra-compliant-brightgreen.svg)](/misra/README.md) [![API](https://img.shields.io/badge/api-reference-blue.svg)](https://www.libdriver.com/docs/sht31/index.html) [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](/LICENSE)
 
 SHT31建立在全新和优化的CMOSens芯片之上，进一步提高了产品可靠性和精度规格。SHT31提供了一系列新功能，如增强信号处理、两个独特和用户可选IIC地址、一个可编程温湿度极限的报警模式，以及高达1 MHz的通信速度。DFN封装的占位面积为2.5 × 2.5 mm2，高度为0.9 mm。这有助于SHT31集成到多种应用。此外，2.15至5.5 V的宽电源电压范围和多种可选接口可保证与不同集成要求的兼容性。总之，SHT31湿度传感器系列融入了Sensirion作为行业领导者15年的经验和心血，是一款超高性价比的产品。
 
-LibDriver SHT31是LibDriver推出的SHT31的全功能驱动，该驱动提供温湿度连续模式读取和温湿度单次模式读取等功能。
+LibDriver SHT31是LibDriver推出的SHT31的全功能驱动，该驱动提供温湿度连续模式读取和温湿度单次模式读取等功能并且它符合MISRA标准。
 
 ### 目录
 

@@ -35,8 +35,8 @@
  * </table>
  */
 
-#ifndef _DRIVER_SHT31_INTERFACE_H_
-#define _DRIVER_SHT31_INTERFACE_H_
+#ifndef DRIVER_SHT31_INTERFACE_H
+#define DRIVER_SHT31_INTERFACE_H
 
 #include "driver_sht31.h"
 
@@ -106,7 +106,7 @@ uint8_t sht31_interface_iic_read_address16(uint8_t addr, uint16_t reg, uint8_t *
  *             - 1 read failed
  * @note       none
  */
-uint8_t sht31_interface_iic_read_address16_with_scl(uint8_t addr, uint16_t reg, uint8_t *buf, uint16_t len);
+uint8_t sht31_interface_iic_scl_read_address16(uint8_t addr, uint16_t reg, uint8_t *buf, uint16_t len);
 
 /**
  * @brief     interface delay ms
@@ -118,10 +118,9 @@ void sht31_interface_delay_ms(uint32_t ms);
 /**
  * @brief     interface print format data
  * @param[in] fmt is the format data
- * @return    length of the send data
  * @note      none
  */
-uint16_t sht31_interface_debug_print(char *fmt, ...);
+void sht31_interface_debug_print(const char *const fmt, ...);
 
 /**
  * @}

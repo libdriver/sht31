@@ -35,8 +35,8 @@
  * </table>
  */
 
-#ifndef _DRIVER_SHT31_SHOT_H_
-#define _DRIVER_SHT31_SHOT_H_
+#ifndef DRIVER_SHT31_SHOT_H
+#define DRIVER_SHT31_SHOT_H
 
 #include "driver_sht31_interface.h"
 

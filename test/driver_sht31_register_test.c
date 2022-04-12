@@ -50,8 +50,8 @@ static sht31_handle_t gs_handle;        /**< sht31 handle */
  */
 uint8_t sht31_register_test(sht31_address_t addr_pin)
 {
-    volatile uint8_t res;
-    volatile uint16_t status;
+    uint8_t res;
+    uint16_t status;
     sht31_info_t info;
     sht31_address_t address_pin;
     sht31_repeatability_t repeatability;
@@ -67,7 +67,7 @@ uint8_t sht31_register_test(sht31_address_t addr_pin)
     
     /* sht31 info */
     res = sht31_info(&info);
-    if (res)
+    if (res != 0)
     {
         sht31_interface_debug_print("sht31: get info failed.\n");
        
@@ -95,7 +95,7 @@ uint8_t sht31_register_test(sht31_address_t addr_pin)
     
     /* set address pin 0 */
     res = sht31_set_addr_pin(&gs_handle, SHT31_ADDRESS_0);
-    if (res)
+    if (res != 0)
     {
         sht31_interface_debug_print("sht31: set addr pin failed.\n");
        
@@ -103,7 +103,7 @@ uint8_t sht31_register_test(sht31_address_t addr_pin)
     }
     sht31_interface_debug_print("sht31: set address pin 0.\n");
     res = sht31_get_addr_pin(&gs_handle, &address_pin);
-    if (res)
+    if (res != 0)
     {
         sht31_interface_debug_print("sht31: get addr pin failed.\n");
        
@@ -113,7 +113,7 @@ uint8_t sht31_register_test(sht31_address_t addr_pin)
     
     /* set address pin 1 */
     res = sht31_set_addr_pin(&gs_handle, SHT31_ADDRESS_1);
-    if (res)
+    if (res != 0)
     {
         sht31_interface_debug_print("sht31: set addr pin failed.\n");
        
@@ -121,7 +121,7 @@ uint8_t sht31_register_test(sht31_address_t addr_pin)
     }
     sht31_interface_debug_print("sht31: set address pin 1.\n");
     res = sht31_get_addr_pin(&gs_handle, &address_pin);
-    if (res)
+    if (res != 0)
     {
         sht31_interface_debug_print("sht31: get addr pin failed.\n");
        
@@ -131,7 +131,7 @@ uint8_t sht31_register_test(sht31_address_t addr_pin)
     
     /* set address pin */
     res = sht31_set_addr_pin(&gs_handle, addr_pin);
-    if (res)
+    if (res != 0)
     {
         sht31_interface_debug_print("sht31: set addr pin failed.\n");
        
@@ -140,7 +140,7 @@ uint8_t sht31_register_test(sht31_address_t addr_pin)
     
     /* sht31 init */
     res = sht31_init(&gs_handle);
-    if (res)
+    if (res != 0)
     {
         sht31_interface_debug_print("sht31: init failed.\n");
        
@@ -155,19 +155,19 @@ uint8_t sht31_register_test(sht31_address_t addr_pin)
     
     /* set high */
     res = sht31_set_repeatability(&gs_handle, SHT31_REPEATABILITY_HIGH);
-    if (res)
+    if (res != 0)
     {
         sht31_interface_debug_print("sht31: set repeatability failed.\n");
-        sht31_deinit(&gs_handle);
+        (void)sht31_deinit(&gs_handle);
        
         return 1;
     }
     sht31_interface_debug_print("sht31: set repeatability high.\n");
     res = sht31_get_repeatability(&gs_handle, &repeatability);
-    if (res)
+    if (res != 0)
     {
         sht31_interface_debug_print("sht31: get repeatability failed.\n");
-        sht31_deinit(&gs_handle);
+        (void)sht31_deinit(&gs_handle);
        
         return 1;
     }
@@ -175,19 +175,19 @@ uint8_t sht31_register_test(sht31_address_t addr_pin)
     
     /* set medium */
     res = sht31_set_repeatability(&gs_handle, SHT31_REPEATABILITY_MEDIUM);
-    if (res)
+    if (res != 0)
     {
         sht31_interface_debug_print("sht31: set repeatability failed.\n");
-        sht31_deinit(&gs_handle);
+        (void)sht31_deinit(&gs_handle);
        
         return 1;
     }
     sht31_interface_debug_print("sht31: set repeatability medium.\n");
     res = sht31_get_repeatability(&gs_handle, &repeatability);
-    if (res)
+    if (res != 0)
     {
         sht31_interface_debug_print("sht31: get repeatability failed.\n");
-        sht31_deinit(&gs_handle);
+        (void)sht31_deinit(&gs_handle);
        
         return 1;
     }
@@ -195,19 +195,19 @@ uint8_t sht31_register_test(sht31_address_t addr_pin)
     
     /* set low */
     res = sht31_set_repeatability(&gs_handle, SHT31_REPEATABILITY_LOW);
-    if (res)
+    if (res != 0)
     {
         sht31_interface_debug_print("sht31: set repeatability failed.\n");
-        sht31_deinit(&gs_handle);
+        (void)sht31_deinit(&gs_handle);
        
         return 1;
     }
     sht31_interface_debug_print("sht31: set repeatability low.\n");
     res = sht31_get_repeatability(&gs_handle, &repeatability);
-    if (res)
+    if (res != 0)
     {
         sht31_interface_debug_print("sht31: get repeatability failed.\n");
-        sht31_deinit(&gs_handle);
+        (void)sht31_deinit(&gs_handle);
        
         return 1;
     }
@@ -216,10 +216,10 @@ uint8_t sht31_register_test(sht31_address_t addr_pin)
     /* set art test */
     sht31_interface_debug_print("sht31: set art test.\n");
     res = sht31_set_art(&gs_handle);
-    if (res)
+    if (res != 0)
     {
         sht31_interface_debug_print("sht31: set art failed.\n");
-        sht31_deinit(&gs_handle);
+        (void)sht31_deinit(&gs_handle);
        
         return 1;
     }
@@ -233,10 +233,10 @@ uint8_t sht31_register_test(sht31_address_t addr_pin)
     
     /* enable heater */
     res = sht31_set_heater(&gs_handle, SHT31_BOOL_TRUE);
-    if (res)
+    if (res != 0)
     {
         sht31_interface_debug_print("sht31: set heater failed.\n");
-        sht31_deinit(&gs_handle);
+        (void)sht31_deinit(&gs_handle);
        
         return 1;
     }
@@ -248,10 +248,10 @@ uint8_t sht31_register_test(sht31_address_t addr_pin)
     
     /* disable heater */
     res = sht31_set_heater(&gs_handle, SHT31_BOOL_FALSE);
-    if (res)
+    if (res != 0)
     {
         sht31_interface_debug_print("sht31: set heater failed.\n");
-        sht31_deinit(&gs_handle);
+        (void)sht31_deinit(&gs_handle);
        
         return 1;
     }
@@ -264,10 +264,10 @@ uint8_t sht31_register_test(sht31_address_t addr_pin)
     /* get_status test*/
     sht31_interface_debug_print("sht31: get status test.\n");
     res = sht31_get_status(&gs_handle, (uint16_t *)&status);
-    if (res)
+    if (res != 0)
     {
         sht31_interface_debug_print("sht31: get status failed.\n");
-        sht31_deinit(&gs_handle);
+        (void)sht31_deinit(&gs_handle);
        
         return 1;
     }
@@ -279,10 +279,10 @@ uint8_t sht31_register_test(sht31_address_t addr_pin)
     /* clear_status test*/
     sht31_interface_debug_print("sht31: clear status test.\n");
     res = sht31_clear_status(&gs_handle);
-    if (res)
+    if (res != 0)
     {
         sht31_interface_debug_print("sht31: clear status failed.\n");
-        sht31_deinit(&gs_handle);
+        (void)sht31_deinit(&gs_handle);
        
         return 1;
     }
@@ -293,7 +293,7 @@ uint8_t sht31_register_test(sht31_address_t addr_pin)
     
     /* finish register test */
     sht31_interface_debug_print("sht31: finish register test.\n");
-    sht31_deinit(&gs_handle);
+    (void)sht31_deinit(&gs_handle);
     
     return 0;
 }

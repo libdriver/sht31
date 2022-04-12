@@ -144,7 +144,7 @@ uint8_t sht31(uint8_t argc, char **argv)
                     return 5;
                 }
                 /* run reg test */
-                if (sht31_register_test(addr_pin))
+                if (sht31_register_test(addr_pin) != 0)
                 {
                     return 1;
                 }
@@ -195,7 +195,7 @@ uint8_t sht31(uint8_t argc, char **argv)
                 }
                 
                 /* run read test */
-                if (sht31_read_test(addr_pin, atoi(argv[3])))
+                if (sht31_read_test(addr_pin, atoi(argv[3])) != 0)
                 {
                     return 1;
                 }
@@ -216,11 +216,11 @@ uint8_t sht31(uint8_t argc, char **argv)
             /* read function */
             if (strcmp("read", argv[2]) == 0)
             {
-                volatile uint8_t res;
-                volatile uint32_t times;
-                volatile uint32_t i;
-                volatile float temperature;
-                volatile float humidity;
+                uint8_t res;
+                uint32_t times;
+                uint32_t i;
+                float temperature;
+                float humidity;
                 sht31_address_t addr_pin;
                 
                 if (strcmp("-a", argv[4]) != 0)
@@ -242,18 +242,18 @@ uint8_t sht31(uint8_t argc, char **argv)
                     return 5;
                 }
                 res = sht31_basic_init(addr_pin);
-                if (res)
+                if (res != 0)
                 {
                     return 1;
                 }
                 times = atoi(argv[3]);
-                for (i=0; i<times; i++)
+                for (i = 0; i < times; i++)
                 {
                     sht31_interface_delay_ms(1000);
                     res = sht31_basic_read((float *)&temperature, (float *)&humidity);
-                    if (res)
+                    if (res != 0)
                     {
-                        sht31_basic_deinit();
+                        (void)sht31_basic_deinit();
                         
                         return 1;
                     }
@@ -261,18 +261,18 @@ uint8_t sht31(uint8_t argc, char **argv)
                     sht31_interface_debug_print("sht31: temperature is %0.2fC.\n", temperature);
                     sht31_interface_debug_print("sht31: humidity is %0.2f%%.\n", humidity);
                 }
-                sht31_basic_deinit();
+                (void)sht31_basic_deinit();
                 
                 return 0;
             }
             /* shot function */
             else if (strcmp("shot", argv[2]) == 0)
             {
-                volatile uint8_t res;
-                volatile uint32_t times;
-                volatile uint32_t i;
-                volatile float temperature;
-                volatile float humidity;
+                uint8_t res;
+                uint32_t times;
+                uint32_t i;
+                float temperature;
+                float humidity;
                 sht31_address_t addr_pin;
                 
                 if (strcmp("-a", argv[4]) != 0)
@@ -294,18 +294,18 @@ uint8_t sht31(uint8_t argc, char **argv)
                     return 5;
                 }
                 res = sht31_shot_init(addr_pin);
-                if (res)
+                if (res != 0)
                 {
                     return 1;
                 }
                 times = atoi(argv[3]);
-                for (i=0; i<times; i++)
+                for (i = 0; i < times; i++)
                 {
                     sht31_interface_delay_ms(1000);
                     res = sht31_shot_read((float *)&temperature, (float *)&humidity);
-                    if (res)
+                    if (res != 0)
                     {
-                        sht31_shot_deinit();
+                        (void)sht31_shot_deinit();
                         
                         return 1;
                     }
@@ -313,7 +313,7 @@ uint8_t sht31(uint8_t argc, char **argv)
                     sht31_interface_debug_print("sht31: temperature is %0.2fC.\n", temperature);
                     sht31_interface_debug_print("sht31: humidity is %0.2f%%.\n", humidity);
                 }
-                sht31_shot_deinit();
+                (void)sht31_shot_deinit();
                 
                 return 0;
             }
@@ -342,7 +342,7 @@ uint8_t sht31(uint8_t argc, char **argv)
  */
 int main(void)
 {
-    volatile uint8_t res;
+    uint8_t res;
     
     /* stm32f407 clock init and hal init */
     clock_init();

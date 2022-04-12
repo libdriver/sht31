@@ -35,8 +35,8 @@
  * </table>
  */
 
-#ifndef _DRIVER_SHT31_READ_TEST_H_
-#define _DRIVER_SHT31_READ_TEST_H_
+#ifndef DRIVER_SHT31_READ_TEST_H
+#define DRIVER_SHT31_READ_TEST_H
 
 #include "driver_sht31_interface.h"
 
