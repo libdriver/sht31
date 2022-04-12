@@ -108,7 +108,7 @@ uint8_t sht31_interface_iic_read_address16(uint8_t addr, uint16_t reg, uint8_t *
  *             - 1 read failed
  * @note       none
  */
-uint8_t sht31_interface_iic_read_address16_with_scl(uint8_t addr, uint16_t reg, uint8_t *buf, uint16_t len)
+uint8_t sht31_interface_iic_scl_read_address16(uint8_t addr, uint16_t reg, uint8_t *buf, uint16_t len)
 {
     return iic_read_address16_with_scl(addr, reg, buf, len);
 }
@@ -126,13 +126,12 @@ void sht31_interface_delay_ms(uint32_t ms)
 /**
  * @brief     interface print format data
  * @param[in] fmt is the format data
- * @return    length of the send data
  * @note      none
  */
-uint16_t sht31_interface_debug_print(char *fmt, ...)
+void sht31_interface_debug_print(const char *const fmt, ...)
 {
-    volatile char str[256];
-    volatile uint8_t len;
+    char str[256];
+    uint8_t len;
     va_list args;
     
     memset((char *)str, 0, sizeof(char)*256); 
@@ -141,12 +140,5 @@ uint16_t sht31_interface_debug_print(char *fmt, ...)
     va_end(args);
     
     len = strlen((char *)str);
-    if (uart1_write((uint8_t *)str, len))
-    {
-        return 0;
-    }
-    else
-    { 
-        return len;
-    }
+    (void)uart1_write((uint8_t *)str, len);
 }

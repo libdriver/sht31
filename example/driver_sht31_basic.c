@@ -49,7 +49,7 @@ static sht31_handle_t gs_handle;        /**< sht31 handle */
  */
 uint8_t sht31_basic_init(sht31_address_t addr_pin)
 {
-    volatile uint8_t res;
+    uint8_t res;
     
     /* link functions */
     DRIVER_SHT31_LINK_INIT(&gs_handle, sht31_handle_t);
@@ -62,7 +62,7 @@ uint8_t sht31_basic_init(sht31_address_t addr_pin)
 
     /* set addr pin */
     res = sht31_set_addr_pin(&gs_handle, addr_pin);
-    if (res)
+    if (res != 0)
     {
         sht31_interface_debug_print("sht31: set addr pin failed.\n");
         
@@ -71,7 +71,7 @@ uint8_t sht31_basic_init(sht31_address_t addr_pin)
     
     /* sht31 init */
     res = sht31_init(&gs_handle);
-    if (res)
+    if (res != 0)
     {
         sht31_interface_debug_print("sht31: init failed.\n");
         
@@ -83,20 +83,20 @@ uint8_t sht31_basic_init(sht31_address_t addr_pin)
     
     /* set default repeatability */
     res = sht31_set_repeatability(&gs_handle, SHT31_BASIC_DEFAULT_REPEATABILITY);
-    if (res)
+    if (res != 0)
     {
         sht31_interface_debug_print("sht31: set repeatability failed.\n");
-        sht31_deinit(&gs_handle);
+        (void)sht31_deinit(&gs_handle);
         
         return 1;
     }
     
     /* set art */
     res = sht31_set_art(&gs_handle);
-    if (res)
+    if (res != 0)
     {
         sht31_interface_debug_print("sht31: set art failed.\n");
-        sht31_deinit(&gs_handle);
+        (void)sht31_deinit(&gs_handle);
         
         return 1;
     }
@@ -106,10 +106,10 @@ uint8_t sht31_basic_init(sht31_address_t addr_pin)
     
     /* set default heater */
     res = sht31_set_heater(&gs_handle, SHT31_BASIC_DEFAULT_HEATER);
-    if (res)
+    if (res != 0)
     {
         sht31_interface_debug_print("sht31: set heater failed.\n");
-        sht31_deinit(&gs_handle);
+        (void)sht31_deinit(&gs_handle);
         
         return 1;
     }
@@ -119,10 +119,10 @@ uint8_t sht31_basic_init(sht31_address_t addr_pin)
     
     /* start continuous read */
     res = sht31_start_continuous_read(&gs_handle, SHT31_BASIC_DEFAULT_RATE);
-    if (res)
+    if (res != 0)
     {
         sht31_interface_debug_print("sht31: start continuous read failed.\n");
-        sht31_deinit(&gs_handle);
+        (void)sht31_deinit(&gs_handle);
         
         return 1;
     }
@@ -141,11 +141,11 @@ uint8_t sht31_basic_init(sht31_address_t addr_pin)
  */
 uint8_t sht31_basic_read(float *temperature, float *humidity)
 {
-    volatile uint16_t temperature_raw;
-    volatile uint16_t humidity_raw;
+    uint16_t temperature_raw;
+    uint16_t humidity_raw;
    
     /* read data */
-    if (sht31_continuous_read(&gs_handle, (uint16_t *)&temperature_raw, temperature, (uint16_t *)&humidity_raw, humidity))
+    if (sht31_continuous_read(&gs_handle, (uint16_t *)&temperature_raw, temperature, (uint16_t *)&humidity_raw, humidity) != 0)
     {
         return 1;
     }
@@ -164,11 +164,11 @@ uint8_t sht31_basic_read(float *temperature, float *humidity)
  */
 uint8_t sht31_basic_deinit(void)
 {
-    volatile uint8_t res;
+    uint8_t res;
     
     /* stop continuous read */
     res = sht31_stop_continuous_read(&gs_handle);
-    if (res)
+    if (res != 0)
     {
         sht31_interface_debug_print("sht31: stop continuous read failed.\n");
         
@@ -176,7 +176,7 @@ uint8_t sht31_basic_deinit(void)
     }
     
     /* close sht31 */
-    if (sht31_deinit(&gs_handle))
+    if (sht31_deinit(&gs_handle) != 0)
     {
         return 1;
     }
