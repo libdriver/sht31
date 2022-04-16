@@ -56,7 +56,7 @@ float temperature;
 float humidity;
 
 res = sht31_basic_init(SHT31_ADDRESS_0);
-if (res)
+if (res != 0)
 {
     return 1;
 }
@@ -67,9 +67,9 @@ for (i = 0; i < 3; i++)
 {
     sht31_interface_delay_ms(1000);
     res = sht31_basic_read((float *)&temperature, (float *)&humidity);
-    if (res)
+    if (res != 0)
     {
-        sht31_basic_deinit();
+        (void)sht31_basic_deinit();
 
         return 1;
     }
@@ -82,7 +82,7 @@ for (i = 0; i < 3; i++)
 
 ...
 
-sht31_basic_deinit();
+(void)sht31_basic_deinit();
 
 return 0;
 ```
@@ -96,7 +96,7 @@ float temperature;
 float humidity;
 
 res = sht31_shot_init(SHT31_ADDRESS_0);
-if (res)
+if (res != 0)
 {
     return 1;
 }
@@ -107,9 +107,9 @@ for (i = 0; i < 3; i++)
 {
     sht31_interface_delay_ms(1000);
     res = sht31_shot_read((float *)&temperature, (float *)&humidity);
-    if (res)
+    if (res != 0)
     {
-        sht31_shot_deinit();
+        (void)sht31_shot_deinit();
 
         return 1;
     }
@@ -122,7 +122,7 @@ for (i = 0; i < 3; i++)
 
 ...
 
-sht31_shot_deinit();
+(void)sht31_shot_deinit();
 
 return 0;
 ```
