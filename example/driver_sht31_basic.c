@@ -170,8 +170,6 @@ uint8_t sht31_basic_deinit(void)
     res = sht31_stop_continuous_read(&gs_handle);
     if (res != 0)
     {
-        sht31_interface_debug_print("sht31: stop continuous read failed.\n");
-        
         return 1;
     }
     
