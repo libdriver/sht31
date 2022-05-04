@@ -27,15 +27,15 @@ LibDriver SHT31 ist der voll funktionsfähige Treiber von SHT31, der von LibDriv
 
 /src enthält LibDriver SHT31-Quelldateien.
 
-/interface enthält die plattformunabhängige Vorlage LibDriver SHT31 IIC。
+/interface enthält die plattformunabhängige Vorlage LibDriver SHT31 IIC.
 
-/test enthält den Testcode des LibDriver SHT31-Treibers und dieser Code kann die erforderliche Funktion des Chips einfach testen。
+/test enthält den Testcode des LibDriver SHT31-Treibers und dieser Code kann die erforderliche Funktion des Chips einfach testen.
 
 /example enthält LibDriver SHT31-Beispielcode.
 
 /doc enthält das LibDriver SHT31-Offlinedokument.
 
-/Datenblatt enthält SHT31-Datenblatt。
+/Datenblatt enthält SHT31-Datenblatt.
 
 /project enthält den allgemeinen Beispielcode für Linux- und MCU-Entwicklungsboards. Alle Projekte verwenden das Shell-Skript, um den Treiber zu debuggen, und die detaillierten Anweisungen finden Sie in der README.md jedes Projekts.
 
