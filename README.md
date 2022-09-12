@@ -28,15 +28,15 @@ LibDriver SHT31 is the full function driver of SHT31 launched by LibDriver.It pr
 
 /src includes LibDriver SHT31 source files.
 
-/interface includes LibDriver SHT31 IIC platform independent template。
+/interface includes LibDriver SHT31 IIC platform independent template.
 
-/test includes LibDriver SHT31 driver test code and this code can test the chip necessary function simply。
+/test includes LibDriver SHT31 driver test code and this code can test the chip necessary function simply.
 
 /example includes LibDriver SHT31 sample code.
 
 /doc includes LibDriver SHT31 offline document.
 
-/datasheet includes SHT31 datasheet。
+/datasheet includes SHT31 datasheet.
 
 /project includes the common Linux and MCU development board sample code. All projects use the shell script to debug the driver and the detail instruction can be found in each project's README.md.
 
@@ -51,6 +51,8 @@ Add /src, /interface and /example to your project.
 #### example basic
 
 ```C
+#include "driver_sht31_basic.h"
+
 uint8_t res;
 uint8_t i;
 float temperature;
@@ -91,6 +93,8 @@ return 0;
 #### example shot
 
 ```C
+#include "driver_sht31_shot.h"
+
 uint8_t res;
 uint8_t i;
 float temperature;

@@ -51,6 +51,8 @@ LibDriver SHT31は、LibDriverによって発売されたSHT31の全機能ドラ
 #### example basic
 
 ```C
+#include "driver_sht31_basic.h"
+
 uint8_t res;
 uint8_t i;
 float temperature;
@@ -91,6 +93,8 @@ return 0;
 #### example shot
 
 ```c
+#include "driver_sht31_shot.h"
+
 uint8_t res;
 uint8_t i;
 float temperature;
