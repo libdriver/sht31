@@ -51,6 +51,8 @@ LibDriver SHT31是LibDriver推出的SHT31的全功能驱动，该驱动提供温
 #### example basic
 
 ```C
+#include "driver_sht31_basic.h"
+
 uint8_t res;
 uint8_t i;
 float temperature;
@@ -91,6 +93,8 @@ return 0;
 #### example shot
 
 ```C
+#include "driver_sht31_shot.h"
+
 uint8_t res;
 uint8_t i;
 float temperature;
