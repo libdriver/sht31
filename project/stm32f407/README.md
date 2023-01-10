@@ -2,51 +2,85 @@
 
 #### 1.1 Chip Info
 
-chip name : STM32F407ZGT6.
+Chip Name: STM32F407ZGT6.
 
-extern oscillator : 8MHz.
+Extern Oscillator: 8MHz.
 
-uart pin: TX/RX PA9/PA10.
+UART Pin: TX/RX PA9/PA10.
 
-iic pin: SCL/SDA PB8/PB9.
+IIC Pin: SCL/SDA PB8/PB9.
 
-### 2. Shell
+### 2. Development and Debugging
 
-#### 2.1 Shell Parameter
+#### 2.1 Integrated Development Environment
 
-baud rate: 115200.
+LidDriver provides both Keil and IAR integrated development environment projects.
 
-data bits : 8.
+MDK is the Keil ARM project and your Keil version must be 5 or higher.Keil ARM project needs STMicroelectronics STM32F4 Series Device Family Pack and you can download from https://www.keil.com/dd2/stmicroelectronics/stm32f407zgtx.
 
-stop bits: 1.
+EW is the IAR ARM project and your IAR version must be 9 or higher.
 
-parity: none.
+#### 2.2 Serial Port Parameter
 
-flow control: none.
+Baud Rate: 115200.
+
+Data Bits : 8.
+
+Stop Bits: 1.
+
+Parity: None.
+
+Flow Control: None.
+
+#### 2.3 Serial Port Assistant
+
+We use '\n' to wrap lines.If your serial port assistant displays exceptions (e.g. the displayed content does not divide lines), please modify the configuration of your serial port assistant or replace one that supports '\n' parsing.
 
 ### 3. SHT31
 
 #### 3.1 Command Instruction
 
-​          sht31 is a basic command which can test all sht31 driver function:
+1. Show sht31 chip and driver information.
 
-​           -i        show sht31 chip and driver information.
+   ```shell
+   sht31 (-i | --information)
+   ```
 
-​           -h       show sht31 help.
+2. Show sht31 help.
 
-​           -p       show sht31 pin connections of the current board.
+   ```shell
+   sht31 (-h | --help)
+   ```
 
-​           -t (reg -a (0 | 1)| read <times> -a (0 | 1))
+3. Show sht31 pin connections of the current board.
 
-​           -t reg -a (0 | 1)        run sht31 register test.
+   ```shell
+   sht31 (-p | --port)
+   ```
 
-​           -t read <times> -a (0 | 1)        run sht31 read test. times is test times.
+4. Run sht31 register test.
 
-​           -c (read <times> -a (0 | 1) | shot <times> -a (0 | 1))
+   ```shell
+   sht31 (-t reg | --test=reg) [--addr=<0 | 1>]
+   ```
 
-​           -c read <times> -a (0 | 1)      run sht31 read function. times is read times.
+5. Run sht31 read test, num is test times.
 
-​           -c shot <times> -a (0 | 1)       run sht31 shot function. times is read times.
+   ```shell
+   sht31 (-t read | --test=read) [--addr=<0 | 1>] [--times=<num>]
+   ```
+
+6. Run sht31 read function, num is read times.
+
+   ```shell
+   sht31 (-e read | --example=read) [--addr=<0 | 1>] [--times=<num>]
+   ```
+
+7. Run sht31 shot function, num is read times.
+
+   ```shell
+   sht31 (-e shot | --example=shot) [--addr=<0 | 1>] [--times=<num>]
+   ```
 
 #### 3.2 Command Example
 
@@ -72,7 +106,7 @@ sht31: SDA connected to GPIOB PIN9.
 ```
 
 ```shell
-sht31 -t reg -a 0
+sht31 -t reg --addr=0
 
 sht31: chip is Sensirion SHT31.
 sht31: manufacturer is Sensirion.
@@ -104,14 +138,14 @@ sht31: check heater ok.
 sht31: disable heater.
 sht31: check heater ok.
 sht31: get status test.
-sht31: check status 0x8860.
+sht31: check status 0x8070.
 sht31: clear status test.
 sht31: check clear status ok.
 sht31: finish register test.
 ```
 
 ```shell
-sht31 -t read 3 -a 0
+sht31 -t read --addr=0 --times=3
 
 sht31: chip is Sensirion SHT31.
 sht31: manufacturer is Sensirion.
@@ -126,188 +160,193 @@ sht31: start read test.
 sht31: continuous read.
 sht31: set low repeatability.
 sht31: set rate 0.5Hz.
-sht31: temperature is 25.05C.
-sht31: humidity is 20.98%.
-sht31: temperature is 25.88C.
-sht31: humidity is 20.93%.
-sht31: temperature is 25.87C.
-sht31: humidity is 20.74%.
+sht31: temperature is 29.69C.
+sht31: humidity is 27.99%.
+sht31: temperature is 30.44C.
+sht31: humidity is 27.79%.
+sht31: temperature is 30.64C.
+sht31: humidity is 27.56%.
 sht31: set rate 1Hz.
-sht31: temperature is 26.08C.
-sht31: humidity is 20.39%.
-sht31: temperature is 26.13C.
-sht31: humidity is 20.44%.
-sht31: temperature is 26.22C.
-sht31: humidity is 20.12%.
+sht31: temperature is 30.59C.
+sht31: humidity is 27.36%.
+sht31: temperature is 30.57C.
+sht31: humidity is 27.24%.
+sht31: temperature is 30.69C.
+sht31: humidity is 27.53%.
 sht31: set rate 2Hz.
-sht31: temperature is 26.18C.
-sht31: humidity is 20.27%.
-sht31: temperature is 26.25C.
-sht31: humidity is 20.17%.
-sht31: temperature is 26.18C.
-sht31: humidity is 20.27%.
+sht31: temperature is 30.65C.
+sht31: humidity is 28.44%.
+sht31: temperature is 30.72C.
+sht31: humidity is 28.26%.
+sht31: temperature is 30.72C.
+sht31: humidity is 28.02%.
 sht31: set rate 4Hz.
-sht31: temperature is 26.25C.
-sht31: humidity is 20.13%.
-sht31: temperature is 26.33C.
-sht31: humidity is 20.24%.
-sht31: temperature is 26.36C.
-sht31: humidity is 20.21%.
+sht31: temperature is 30.74C.
+sht31: humidity is 27.77%.
+sht31: temperature is 30.64C.
+sht31: humidity is 27.69%.
+sht31: temperature is 30.72C.
+sht31: humidity is 27.49%.
 sht31: set rate 10Hz.
-sht31: temperature is 26.25C.
-sht31: humidity is 20.16%.
-sht31: temperature is 26.26C.
-sht31: humidity is 20.19%.
-sht31: temperature is 26.29C.
-sht31: humidity is 20.18%.
+sht31: temperature is 30.71C.
+sht31: humidity is 27.55%.
+sht31: temperature is 30.72C.
+sht31: humidity is 27.48%.
+sht31: temperature is 30.69C.
+sht31: humidity is 27.37%.
 sht31: set medium repeatability.
 sht31: set rate 0.5Hz.
-sht31: temperature is 26.36C.
-sht31: humidity is 20.12%.
-sht31: temperature is 26.33C.
-sht31: humidity is 20.07%.
-sht31: temperature is 26.39C.
-sht31: humidity is 19.95%.
+sht31: temperature is 30.74C.
+sht31: humidity is 27.43%.
+sht31: temperature is 30.81C.
+sht31: humidity is 27.47%.
+sht31: temperature is 30.75C.
+sht31: humidity is 27.49%.
 sht31: set rate 1Hz.
-sht31: temperature is 26.43C.
-sht31: humidity is 20.10%.
-sht31: temperature is 26.43C.
-sht31: humidity is 19.91%.
-sht31: temperature is 26.46C.
-sht31: humidity is 20.14%.
+sht31: temperature is 30.78C.
+sht31: humidity is 27.50%.
+sht31: temperature is 30.75C.
+sht31: humidity is 27.39%.
+sht31: temperature is 30.78C.
+sht31: humidity is 27.30%.
 sht31: set rate 2Hz.
-sht31: temperature is 26.52C.
-sht31: humidity is 20.03%.
-sht31: temperature is 26.53C.
-sht31: humidity is 19.93%.
-sht31: temperature is 26.50C.
-sht31: humidity is 19.99%.
+sht31: temperature is 30.83C.
+sht31: humidity is 27.38%.
+sht31: temperature is 30.76C.
+sht31: humidity is 27.42%.
+sht31: temperature is 30.79C.
+sht31: humidity is 27.42%.
 sht31: set rate 4Hz.
-sht31: temperature is 26.53C.
-sht31: humidity is 20.00%.
-sht31: temperature is 26.52C.
-sht31: humidity is 19.93%.
-sht31: temperature is 26.56C.
-sht31: humidity is 19.85%.
+sht31: temperature is 30.79C.
+sht31: humidity is 27.51%.
+sht31: temperature is 30.81C.
+sht31: humidity is 27.60%.
+sht31: temperature is 30.81C.
+sht31: humidity is 27.72%.
 sht31: set rate 10Hz.
-sht31: temperature is 26.57C.
-sht31: humidity is 19.87%.
-sht31: temperature is 26.56C.
-sht31: humidity is 19.92%.
-sht31: temperature is 26.50C.
-sht31: humidity is 19.86%.
+sht31: temperature is 30.82C.
+sht31: humidity is 27.90%.
+sht31: temperature is 30.79C.
+sht31: humidity is 27.96%.
+sht31: temperature is 30.79C.
+sht31: humidity is 28.09%.
 sht31: set high repeatability.
 sht31: set rate 0.5Hz.
-sht31: temperature is 26.68C.
-sht31: humidity is 19.84%.
-sht31: temperature is 26.60C.
-sht31: humidity is 19.86%.
-sht31: temperature is 26.61C.
-sht31: humidity is 19.86%.
+sht31: temperature is 30.85C.
+sht31: humidity is 28.11%.
+sht31: temperature is 30.82C.
+sht31: humidity is 28.29%.
+sht31: temperature is 30.82C.
+sht31: humidity is 28.21%.
 sht31: set rate 1Hz.
-sht31: temperature is 26.64C.
-sht31: humidity is 19.71%.
-sht31: temperature is 26.67C.
-sht31: humidity is 19.78%.
-sht31: temperature is 26.66C.
-sht31: humidity is 19.78%.
+sht31: temperature is 30.89C.
+sht31: humidity is 28.05%.
+sht31: temperature is 30.83C.
+sht31: humidity is 27.86%.
+sht31: temperature is 30.86C.
+sht31: humidity is 27.68%.
 sht31: set rate 2Hz.
-sht31: temperature is 26.71C.
-sht31: humidity is 19.83%.
-sht31: temperature is 26.67C.
-sht31: humidity is 19.73%.
-sht31: temperature is 26.68C.
-sht31: humidity is 19.78%.
+sht31: temperature is 30.83C.
+sht31: humidity is 27.57%.
+sht31: temperature is 30.83C.
+sht31: humidity is 27.54%.
+sht31: temperature is 30.85C.
+sht31: humidity is 27.47%.
 sht31: set rate 4Hz.
-sht31: temperature is 26.68C.
-sht31: humidity is 19.83%.
-sht31: temperature is 26.68C.
-sht31: humidity is 19.76%.
-sht31: temperature is 26.71C.
-sht31: humidity is 19.78%.
+sht31: temperature is 30.83C.
+sht31: humidity is 27.45%.
+sht31: temperature is 30.86C.
+sht31: humidity is 27.34%.
+sht31: temperature is 30.87C.
+sht31: humidity is 27.32%.
 sht31: set rate 10Hz.
-sht31: temperature is 26.71C.
-sht31: humidity is 19.96%.
-sht31: temperature is 26.74C.
-sht31: humidity is 19.93%.
-sht31: temperature is 26.71C.
-sht31: humidity is 19.97%.
+sht31: temperature is 30.81C.
+sht31: humidity is 27.18%.
+sht31: temperature is 30.85C.
+sht31: humidity is 27.40%.
+sht31: temperature is 30.86C.
+sht31: humidity is 27.44%.
 sht31: single read.
 sht31: set low repeatability.
-sht31: temperature is 26.68C.
-sht31: humidity is 20.02%.
-sht31: temperature is 26.64C.
-sht31: humidity is 19.94%.
-sht31: temperature is 26.73C.
-sht31: humidity is 19.96%.
+sht31: temperature is 30.87C.
+sht31: humidity is 27.56%.
+sht31: temperature is 30.81C.
+sht31: humidity is 27.72%.
+sht31: temperature is 30.83C.
+sht31: humidity is 27.57%.
 sht31: set medium repeatability.
-sht31: temperature is 26.74C.
-sht31: humidity is 19.96%.
-sht31: temperature is 26.73C.
-sht31: humidity is 20.02%.
-sht31: temperature is 26.76C.
-sht31: humidity is 20.07%.
+sht31: temperature is 30.90C.
+sht31: humidity is 27.65%.
+sht31: temperature is 30.82C.
+sht31: humidity is 27.59%.
+sht31: temperature is 30.87C.
+sht31: humidity is 27.68%.
 sht31: set high repeatability.
-sht31: temperature is 26.76C.
-sht31: humidity is 20.18%.
-sht31: temperature is 26.73C.
-sht31: humidity is 20.14%.
-sht31: temperature is 26.76C.
-sht31: humidity is 20.22%.
+sht31: temperature is 30.85C.
+sht31: humidity is 27.63%.
+sht31: temperature is 30.86C.
+sht31: humidity is 27.65%.
+sht31: temperature is 30.85C.
+sht31: humidity is 27.56%.
 sht31: disable clock stretching.
-sht31: temperature is 26.77C.
-sht31: humidity is 20.09%.
-sht31: temperature is 26.76C.
-sht31: humidity is 20.04%.
-sht31: temperature is 26.78C.
-sht31: humidity is 20.06%.
+sht31: temperature is 30.85C.
+sht31: humidity is 27.59%.
+sht31: temperature is 30.86C.
+sht31: humidity is 27.81%.
+sht31: temperature is 30.86C.
+sht31: humidity is 28.47%.
 sht31: finish read test.
 ```
 
 ```shell
-sht31 -c read 3 -a 0
+sht31 -e read --addr=0 --times=3
 
 sht31: 1/3.
-sht31: temperature is 28.44C.
-sht31: humidity is 19.86%.
+sht31: temperature is 31.00C.
+sht31: humidity is 27.47%.
 sht31: 2/3.
-sht31: temperature is 28.46C.
-sht31: humidity is 19.86%.
+sht31: temperature is 31.03C.
+sht31: humidity is 27.68%.
 sht31: 3/3.
-sht31: temperature is 28.47C.
-sht31: humidity is 19.79%.
+sht31: temperature is 31.02C.
+sht31: humidity is 27.66%.
 ```
 
 ```shell
-sht31 -c shot 3 -a 0
+sht31 -e shot --addr=0 --times=3
 
 sht31: 1/3.
-sht31: temperature is 28.66C.
-sht31: humidity is 19.57%.
+sht31: temperature is 30.89C.
+sht31: humidity is 27.58%.
 sht31: 2/3.
-sht31: temperature is 28.60C.
-sht31: humidity is 19.59%.
+sht31: temperature is 30.90C.
+sht31: humidity is 27.48%.
 sht31: 3/3.
-sht31: temperature is 28.63C.
-sht31: humidity is 19.56%.
+sht31: temperature is 30.92C.
+sht31: humidity is 27.44%.
 ```
 
 ```shell
 sht31 -h
 
-sht31 -i
-	show sht31 chip and driver information.
-sht31 -h
-	show sht31 help.
-sht31 -p
-	show sht31 pin connections of the current board.
-sht31 -t reg -a (0 | 1)
-	run sht31 register test.
-sht31 -t read <times> -a (0 | 1)
-	run sht31 read test.times is test times.
-sht31 -c read <times> -a (0 | 1)
-	run sht31 read function.times is read times.
-sht31 -c shot <times> -a (0 | 1)
-	run sht31 shot function.times is read times.
+Usage:
+  sht31 (-i | --information)
+  sht31 (-h | --help)
+  sht31 (-p | --port)
+  sht31 (-t reg | --test=reg) [--addr=<0 | 1>]
+  sht31 (-t read | --test=read) [--addr=<0 | 1>] [--times=<num>]
+  sht31 (-e read | --example=read) [--addr=<0 | 1>] [--times=<num>]
+  sht31 (-e shot | --example=shot) [--addr=<0 | 1>] [--times=<num>]
+
+Options:
+      --addr=<0 | 1>    Set the addr pin.([default: 0])
+  -e <read | shot>, --example=<read | shot>
+                        Run the driver example.
+  -h, --help            Show the help.
+  -i, --information     Show the chip information.
+  -p, --port            Display the pin connections of the current board.
+  -t <reg | read>, --test=<reg | read>
+                        Run the driver test.
+      --times=<num>     Set the running times.([default: 3])
 ```
 
