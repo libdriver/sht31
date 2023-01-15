@@ -156,7 +156,7 @@ typedef struct sht31_info_s
 
 /**
  * @brief     initialize sht31_handle_t structure
- * @param[in] HANDLE points to a sht31 handle structure
+ * @param[in] HANDLE points to an sht31 handle structure
  * @param[in] STRUCTURE is sht31_handle_t
  * @note      none
  */
@@ -164,7 +164,7 @@ typedef struct sht31_info_s
 
 /**
  * @brief     link iic_init function
- * @param[in] HANDLE points to a sht31 handle structure
+ * @param[in] HANDLE points to an sht31 handle structure
  * @param[in] FUC points to an iic_init function address
  * @note      none
  */
@@ -172,7 +172,7 @@ typedef struct sht31_info_s
 
 /**
  * @brief     link iic_deinit function
- * @param[in] HANDLE points to a sht31 handle structure
+ * @param[in] HANDLE points to an sht31 handle structure
  * @param[in] FUC points to an iic_deinit function address
  * @note      none
  */
@@ -180,7 +180,7 @@ typedef struct sht31_info_s
 
 /**
  * @brief     link iic_read_address16 function
- * @param[in] HANDLE points to a sht31 handle structure
+ * @param[in] HANDLE points to an sht31 handle structure
  * @param[in] FUC points to an iic_read_address16 function address
  * @note      none
  */
@@ -188,7 +188,7 @@ typedef struct sht31_info_s
 
 /**
  * @brief     link iic_write_address16 function
- * @param[in] HANDLE points to a sht31 handle structure
+ * @param[in] HANDLE points to an sht31 handle structure
  * @param[in] FUC points to an iic_write_address16 function address
  * @note      none
  */
@@ -196,7 +196,7 @@ typedef struct sht31_info_s
 
 /**
  * @brief     link delay_ms function
- * @param[in] HANDLE points to a sht31 handle structure
+ * @param[in] HANDLE points to an sht31 handle structure
  * @param[in] FUC points to a delay_ms function address
  * @note      none
  */
@@ -204,7 +204,7 @@ typedef struct sht31_info_s
 
 /**
  * @brief     link debug_print function
- * @param[in] HANDLE points to a sht31 handle structure
+ * @param[in] HANDLE points to an sht31 handle structure
  * @param[in] FUC points to a debug_print function address
  * @note      none
  */
@@ -223,7 +223,7 @@ typedef struct sht31_info_s
 
 /**
  * @brief      get chip's information
- * @param[out] *info points to a sht31 info structure
+ * @param[out] *info points to an sht31 info structure
  * @return     status code
  *             - 0 success
  *             - 2 handle is NULL
@@ -233,7 +233,7 @@ uint8_t sht31_info(sht31_info_t *info);
 
 /**
  * @brief     set the iic address pin
- * @param[in] *handle points to a sht31 handle structure
+ * @param[in] *handle points to an sht31 handle structure
  * @param[in] addr_pin is the chip iic address pin
  * @return    status code
  *            - 0 success
@@ -245,7 +245,7 @@ uint8_t sht31_set_addr_pin(sht31_handle_t *handle, sht31_address_t addr_pin);
 
 /**
  * @brief      get the iic address pin
- * @param[in]  *handle points to a sht31 handle structure
+ * @param[in]  *handle points to an sht31 handle structure
  * @param[out] *addr_pin points to a chip iic address pin buffer
  * @return      status code
  *              - 0 success
@@ -257,7 +257,7 @@ uint8_t sht31_get_addr_pin(sht31_handle_t *handle, sht31_address_t *addr_pin);
 
 /**
  * @brief     initialize the chip
- * @param[in] *handle points to a sht31 handle structure
+ * @param[in] *handle points to an sht31 handle structure
  * @return    status code
  *            - 0 success
  *            - 1 iic initialization failed
@@ -269,7 +269,7 @@ uint8_t sht31_init(sht31_handle_t *handle);
 
 /**
  * @brief     close the chip
- * @param[in] *handle points to a sht31 handle structure
+ * @param[in] *handle points to an sht31 handle structure
  * @return    status code
  *            - 0 success
  *            - 1 iic deinit failed
@@ -281,7 +281,7 @@ uint8_t sht31_deinit(sht31_handle_t *handle);
 
 /**
  * @brief      read data once
- * @param[in]  *handle points to a sht31 handle structure
+ * @param[in]  *handle points to an sht31 handle structure
  * @param[in]  clock_stretching_enable is a clock stretching bool value
  * @param[out] *temperature_raw points to a raw temperature buffer
  * @param[out] *temperature_s points to a converted temperature buffer
@@ -301,7 +301,7 @@ uint8_t sht31_single_read(sht31_handle_t *handle, sht31_bool_t clock_stretching_
 
 /**
  * @brief     start reading
- * @param[in] *handle points to a sht31 handle structure
+ * @param[in] *handle points to an sht31 handle structure
  * @param[in] rate is the sample rate
  * @return    status code
  *            - 0 success
@@ -314,7 +314,7 @@ uint8_t sht31_start_continuous_read(sht31_handle_t *handle, sht31_rate_t rate);
 
 /**
  * @brief     stop reading
- * @param[in] *handle points to a sht31 handle structure
+ * @param[in] *handle points to an sht31 handle structure
  * @return    status code
  *            - 0 success
  *            - 1 stop continuous read failed
@@ -326,7 +326,7 @@ uint8_t sht31_stop_continuous_read(sht31_handle_t *handle);
 
 /**
  * @brief      read data continuously
- * @param[in]  *handle points to a sht31 handle structure
+ * @param[in]  *handle points to an sht31 handle structure
  * @param[out] *temperature_raw points to a raw temperature buffer
  * @param[out] *temperature_s points to a converted temperature buffer
  * @param[out] *humidity_raw points to a raw humidity buffer
@@ -344,7 +344,7 @@ uint8_t sht31_continuous_read(sht31_handle_t *handle,
 
 /**
  * @brief      get the current status
- * @param[in]  *handle points to a sht31 handle structure
+ * @param[in]  *handle points to an sht31 handle structure
  * @param[out] *status points to a status buffer
  * @return      status code
  *              - 0 success
@@ -356,7 +356,7 @@ uint8_t sht31_get_status(sht31_handle_t *handle, uint16_t *status);
 
 /**
  * @brief     clear the current status
- * @param[in] *handle points to a sht31 handle structure
+ * @param[in] *handle points to an sht31 handle structure
  * @return    status code
  *            - 0 success
  *            - 1 clear status failed
@@ -367,7 +367,7 @@ uint8_t sht31_clear_status(sht31_handle_t *handle);
 
 /**
  * @brief     set the measurement repeatability
- * @param[in] *handle points to a sht31 handle structure
+ * @param[in] *handle points to an sht31 handle structure
  * @param[in] repeatability is the measurement repeatability
  * @return    status code
  *            - 0 success
@@ -379,7 +379,7 @@ uint8_t sht31_set_repeatability(sht31_handle_t *handle, sht31_repeatability_t re
 
 /**
  * @brief      get the measurement repeatability
- * @param[in]  *handle points to a sht31 handle structure
+ * @param[in]  *handle points to an sht31 handle structure
  * @param[out] *repeatability points to a measurement repeatability buffer
  * @return     status code
  *             - 0 success
@@ -391,7 +391,7 @@ uint8_t sht31_get_repeatability(sht31_handle_t *handle, sht31_repeatability_t *r
 
 /**
  * @brief     set the chip art
- * @param[in] *handle points to a sht31 handle structure
+ * @param[in] *handle points to an sht31 handle structure
  * @return    status code
  *            - 0 success
  *            - 1 set art failed
@@ -403,7 +403,7 @@ uint8_t sht31_set_art(sht31_handle_t *handle);
 
 /**
  * @brief     soft reset the chip
- * @param[in] *handle points to a sht31 handle structure
+ * @param[in] *handle points to an sht31 handle structure
  * @return    status code
  *            - 0 success
  *            - 1 soft reset failed
@@ -415,7 +415,7 @@ uint8_t sht31_soft_reset(sht31_handle_t *handle);
 
 /**
  * @brief     enable or disable the chip heater
- * @param[in] *handle points to a sht31 handle structure
+ * @param[in] *handle points to an sht31 handle structure
  * @param[in] enable is a bool value
  * @return    status code
  *            - 0 success
@@ -439,7 +439,7 @@ uint8_t sht31_set_heater(sht31_handle_t *handle, sht31_bool_t enable);
 
 /**
  * @brief     set the chip register
- * @param[in] *handle points to a sht31 handle structure
+ * @param[in] *handle points to an sht31 handle structure
  * @param[in] command is the chip command
  * @return    status code
  *            - 0 success
@@ -452,7 +452,7 @@ uint8_t sht31_set_reg(sht31_handle_t *handle, uint16_t command);
 
 /**
  * @brief      get the chip register
- * @param[in]  *handle points to a sht31 handle structure
+ * @param[in]  *handle points to an sht31 handle structure
  * @param[in]  command is the chip command
  * @param[out] *buf points to data buffer
  * @param[in]  len is the data length
