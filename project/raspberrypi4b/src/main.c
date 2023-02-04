@@ -67,7 +67,7 @@ uint8_t sht31(uint8_t argc, char **argv)
         {"times", required_argument, NULL, 2},
         {NULL, 0, NULL, 0},
     };
-    char type[33] = "unknow";
+    char type[33] = "unknown";
     uint32_t times = 3;
     sht31_address_t addr = SHT31_ADDRESS_0;
     
@@ -372,7 +372,7 @@ int main(uint8_t argc, char **argv)
     }
     else
     {
-        sht31_interface_debug_print("sht31: unknow status code.\n");
+        sht31_interface_debug_print("sht31: unknown status code.\n");
     }
 
     return 0;
