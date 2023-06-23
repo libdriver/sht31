@@ -54,7 +54,7 @@ extern "C"{
  */
 #define SHT31_SHOT_DEFAULT_CLOCK_STRETCHING     SHT31_BOOL_TRUE                 /**< enable clock stretching */
 #define SHT31_SHOT_DEFAULT_REPEATABILITY        SHT31_REPEATABILITY_HIGH        /**< set high */
-#define SHT31_SHOT_DEFAULT_HEATER               SHT31_BOOL_TRUE                 /**< enable heater */
+#define SHT31_SHOT_DEFAULT_HEATER               SHT31_BOOL_FALSE                /**< disable heater */
 
 /**
  * @brief     shot example init
