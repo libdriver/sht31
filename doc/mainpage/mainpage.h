@@ -1,6 +1,6 @@
 /**
  * @mainpage  LibDriver SHT31
- * @brief     libdriver sht31 is a full function driver of sht31 and it can run in both MCU and Linux platform.
+ * @brief     LibDriver SHT31 is a full function driver of SHT31 and it can run in both MCU and Linux platform.
  * @version   2.0.0
  * @author    Shifeng Li
  *
