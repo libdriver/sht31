@@ -51,7 +51,15 @@ static sht31_handle_t gs_handle;        /**< sht31 handle */
 uint8_t sht31_register_test(sht31_address_t addr_pin)
 {
     uint8_t res;
+    uint16_t reg;
     uint16_t status;
+    uint8_t sn[4];
+    uint16_t set;
+    uint16_t clear;
+    uint16_t set_check;
+    uint16_t clear_check;
+    float temperature;
+    float humidity;
     sht31_info_t info;
     sht31_address_t address_pin;
     sht31_repeatability_t repeatability;
@@ -64,6 +72,7 @@ uint8_t sht31_register_test(sht31_address_t addr_pin)
     DRIVER_SHT31_LINK_IIC_WRITE_ADDRESS16(&gs_handle, sht31_interface_iic_write_address16);
     DRIVER_SHT31_LINK_DELAY_MS(&gs_handle, sht31_interface_delay_ms);
     DRIVER_SHT31_LINK_DEBUG_PRINT(&gs_handle, sht31_interface_debug_print);
+    DRIVER_SHT31_LINK_RECEIVE_CALLBACK(&gs_handle, sht31_interface_receive_callback);
     
     /* sht31 info */
     res = sht31_info(&info);
@@ -109,7 +118,7 @@ uint8_t sht31_register_test(sht31_address_t addr_pin)
        
         return 1;
     }
-    sht31_interface_debug_print("sht31: check addr pin %s.\n", (SHT31_ADDRESS_0==address_pin)?"ok":"error");
+    sht31_interface_debug_print("sht31: check addr pin %s.\n", (SHT31_ADDRESS_0 == address_pin) ? "ok" : "error");
     
     /* set address pin 1 */
     res = sht31_set_addr_pin(&gs_handle, SHT31_ADDRESS_1);
@@ -127,7 +136,7 @@ uint8_t sht31_register_test(sht31_address_t addr_pin)
        
         return 1;
     }
-    sht31_interface_debug_print("sht31: check addr pin %s.\n", (SHT31_ADDRESS_1==address_pin)?"ok":"error");
+    sht31_interface_debug_print("sht31: check addr pin %s.\n", (SHT31_ADDRESS_1 == address_pin) ? "ok" : "error");
     
     /* set address pin */
     res = sht31_set_addr_pin(&gs_handle, addr_pin);
@@ -171,7 +180,7 @@ uint8_t sht31_register_test(sht31_address_t addr_pin)
        
         return 1;
     }
-    sht31_interface_debug_print("sht31: check repeatability pin %s.\n", (SHT31_REPEATABILITY_HIGH==repeatability)?"ok":"error");
+    sht31_interface_debug_print("sht31: check repeatability pin %s.\n", (SHT31_REPEATABILITY_HIGH == repeatability) ? "ok" : "error");
     
     /* set medium */
     res = sht31_set_repeatability(&gs_handle, SHT31_REPEATABILITY_MEDIUM);
@@ -191,7 +200,7 @@ uint8_t sht31_register_test(sht31_address_t addr_pin)
        
         return 1;
     }
-    sht31_interface_debug_print("sht31: check repeatability pin %s.\n", (SHT31_REPEATABILITY_MEDIUM==repeatability)?"ok":"error");
+    sht31_interface_debug_print("sht31: check repeatability pin %s.\n", (SHT31_REPEATABILITY_MEDIUM == repeatability) ? "ok" : "error");
     
     /* set low */
     res = sht31_set_repeatability(&gs_handle, SHT31_REPEATABILITY_LOW);
@@ -211,7 +220,7 @@ uint8_t sht31_register_test(sht31_address_t addr_pin)
        
         return 1;
     }
-    sht31_interface_debug_print("sht31: check repeatability pin %s.\n", (SHT31_REPEATABILITY_LOW==repeatability)?"ok":"error");
+    sht31_interface_debug_print("sht31: check repeatability pin %s.\n", (SHT31_REPEATABILITY_LOW == repeatability) ? "ok" : "error");
     
     /* set art test */
     sht31_interface_debug_print("sht31: set art test.\n");
@@ -226,7 +235,7 @@ uint8_t sht31_register_test(sht31_address_t addr_pin)
     
     /* wait 10 ms */
     sht31_interface_delay_ms(10);
-    sht31_interface_debug_print("sht31: check art %s.\n", (res==0)?"ok":"error");
+    sht31_interface_debug_print("sht31: check art %s.\n", (res == 0) ? "ok" : "error");
     
     /* sht31_set_heater test*/
     sht31_interface_debug_print("sht31: set heater test.\n");
@@ -244,7 +253,7 @@ uint8_t sht31_register_test(sht31_address_t addr_pin)
     /* wait 10 ms */
     sht31_interface_delay_ms(10);
     sht31_interface_debug_print("sht31: enable heater.\n");
-    sht31_interface_debug_print("sht31: check heater %s.\n", (res==0)?"ok":"error");
+    sht31_interface_debug_print("sht31: check heater %s.\n", (res == 0) ? "ok" : "error");
     
     /* disable heater */
     res = sht31_set_heater(&gs_handle, SHT31_BOOL_FALSE);
@@ -259,10 +268,10 @@ uint8_t sht31_register_test(sht31_address_t addr_pin)
     /* wait 10 ms */
     sht31_interface_delay_ms(10);
     sht31_interface_debug_print("sht31: disable heater.\n");
-    sht31_interface_debug_print("sht31: check heater %s.\n", (res==0)?"ok":"error");
+    sht31_interface_debug_print("sht31: check heater %s.\n", (res == 0) ? "ok" : "error");
     
     /* get_status test*/
-    sht31_interface_debug_print("sht31: get status test.\n");
+    sht31_interface_debug_print("sht31: sht31_get_status test.\n");
     res = sht31_get_status(&gs_handle, (uint16_t *)&status);
     if (res != 0)
     {
@@ -277,7 +286,7 @@ uint8_t sht31_register_test(sht31_address_t addr_pin)
     sht31_interface_debug_print("sht31: check status 0x%02X.\n", status);
     
     /* clear_status test*/
-    sht31_interface_debug_print("sht31: clear status test.\n");
+    sht31_interface_debug_print("sht31: sht31_clear_status test.\n");
     res = sht31_clear_status(&gs_handle);
     if (res != 0)
     {
@@ -289,7 +298,102 @@ uint8_t sht31_register_test(sht31_address_t addr_pin)
     
     /* wait 10 ms */
     sht31_interface_delay_ms(10);
-    sht31_interface_debug_print("sht31: check clear status %s.\n", (res==0)?"ok":"error");
+    sht31_interface_debug_print("sht31: check clear status %s.\n", (res == 0) ? "ok" : "error");
+    
+    /* sht31_get_serial_number test*/
+    sht31_interface_debug_print("sht31: sht31_get_serial_number test.\n");
+    
+    /* get serial number */
+    res = sht31_get_serial_number(&gs_handle, sn);
+    if (res != 0)
+    {
+        sht31_interface_debug_print("sht31: get serial number failed.\n");
+        (void)sht31_deinit(&gs_handle);
+       
+        return 1;
+    }
+    sht31_interface_debug_print("sht31: serial number is 0x%02X 0x%02X 0x%02X 0x%02X.\n", sn[0], sn[1], sn[2], sn[3]);
+    
+    /* sht31_set_high_alert_limit/sht31_get_high_alert_limit test */
+    sht31_interface_debug_print("sht31: sht31_set_high_alert_limit/sht31_get_high_alert_limit test.\n");
+    
+    set = rand() % 0xFFFF;
+    clear = rand() % 0xFFFF;
+    res = sht31_set_high_alert_limit(&gs_handle, set, clear);
+    if (res != 0)
+    {
+        sht31_interface_debug_print("sht31: set high alert limit failed.\n");
+        (void)sht31_deinit(&gs_handle);
+       
+        return 1;
+    }
+    sht31_interface_debug_print("sht31: set is 0x%04X.\n", set);
+    sht31_interface_debug_print("sht31: clear is 0x%04X.\n", clear);
+    res = sht31_get_high_alert_limit(&gs_handle, &set_check, &clear_check);
+    if (res != 0)
+    {
+        sht31_interface_debug_print("sht31: get high alert limit failed.\n");
+        (void)sht31_deinit(&gs_handle);
+       
+        return 1;
+    }
+    sht31_interface_debug_print("sht31: check high alert limit set %s.\n", (set == set_check) ? "ok" : "error");
+    sht31_interface_debug_print("sht31: check high alert limit clear %s.\n", (clear == clear_check) ? "ok" : "error");
+    
+    /* sht31_set_low_alert_limit/sht31_get_low_alert_limit test */
+    sht31_interface_debug_print("sht31: sht31_set_low_alert_limit/sht31_get_low_alert_limit test.\n");
+    
+    set = rand() % 0xFFFF;
+    clear = rand() % 0xFFFF;
+    res = sht31_set_low_alert_limit(&gs_handle, set, clear);
+    if (res != 0)
+    {
+        sht31_interface_debug_print("sht31: set low alert limit failed.\n");
+        (void)sht31_deinit(&gs_handle);
+       
+        return 1;
+    }
+    sht31_interface_debug_print("sht31: set is 0x%04X.\n", set);
+    sht31_interface_debug_print("sht31: clear is 0x%04X.\n", clear);
+    res = sht31_get_low_alert_limit(&gs_handle, &set_check, &clear_check);
+    if (res != 0)
+    {
+        sht31_interface_debug_print("sht31: get low alert limit failed.\n");
+        (void)sht31_deinit(&gs_handle);
+       
+        return 1;
+    }
+    sht31_interface_debug_print("sht31: check low alert limit set %s.\n", (set == set_check) ? "ok" : "error");
+    sht31_interface_debug_print("sht31: check low alert limit clear %s.\n", (clear == clear_check) ? "ok" : "error");
+    
+    /* sht31_alert_limit_convert_to_register test */
+    sht31_interface_debug_print("sht31: sht31_alert_limit_convert_to_register test.\n");
+    
+    /* alert limit convert to register */
+    temperature = 60.0f;
+    humidity = 80.0f;
+    res = sht31_alert_limit_convert_to_register(&gs_handle, temperature, humidity, &reg);
+    if (res != 0)
+    {
+        sht31_interface_debug_print("sht31: alert limit convert to register failed.\n");
+        (void)sht31_deinit(&gs_handle);
+       
+        return 1;
+    }
+    sht31_interface_debug_print("sht31: %0.2f%% %0.2fC converted 0x%04X.\n", humidity, temperature, reg);
+    
+    /* alert limit convert to register */
+    temperature = -9.0f;
+    humidity = 22.0f;
+    res = sht31_alert_limit_convert_to_register(&gs_handle, temperature, humidity, &reg);
+    if (res != 0)
+    {
+        sht31_interface_debug_print("sht31: alert limit convert to register failed.\n");
+        (void)sht31_deinit(&gs_handle);
+       
+        return 1;
+    }
+    sht31_interface_debug_print("sht31: %0.2f%% %0.2fC converted 0x%04X.\n", humidity, temperature, reg);
     
     /* finish register test */
     sht31_interface_debug_print("sht31: finish register test.\n");

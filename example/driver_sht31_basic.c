@@ -59,6 +59,7 @@ uint8_t sht31_basic_init(sht31_address_t addr_pin)
     DRIVER_SHT31_LINK_IIC_WRITE_ADDRESS16(&gs_handle, sht31_interface_iic_write_address16);
     DRIVER_SHT31_LINK_DELAY_MS(&gs_handle, sht31_interface_delay_ms);
     DRIVER_SHT31_LINK_DEBUG_PRINT(&gs_handle, sht31_interface_debug_print);
+    DRIVER_SHT31_LINK_RECEIVE_CALLBACK(&gs_handle, sht31_interface_receive_callback);
 
     /* set addr pin */
     res = sht31_set_addr_pin(&gs_handle, addr_pin);
@@ -149,10 +150,8 @@ uint8_t sht31_basic_read(float *temperature, float *humidity)
     {
         return 1;
     }
-    else
-    {
-        return 0;
-    }
+    
+    return 0;
 }
 
 /**
@@ -173,13 +172,33 @@ uint8_t sht31_basic_deinit(void)
         return 1;
     }
     
+    /* delay 100ms */
+    sht31_interface_delay_ms(100);
+    
     /* close sht31 */
     if (sht31_deinit(&gs_handle) != 0)
     {
         return 1;
     }
-    else
+    
+    return 0;
+}
+
+/**
+ * @brief      basic example get serial number
+ * @param[out] *sn pointer to a serial number buffer
+ * @return     status code
+ *             - 0 success
+ *             - 1 get failed
+ * @note       none
+ */
+uint8_t sht31_basic_get_serial_number(uint8_t sn[4])
+{
+    /* get serial number */
+    if (sht31_get_serial_number(&gs_handle, sn) != 0)
     {
-        return 0;
+        return 1;
     }
+    
+    return 0;
 }
