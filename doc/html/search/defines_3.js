@@ -1,13 +1,22 @@
 var searchData=
 [
-  ['sht31_5fcommand_5fart_225',['SHT31_COMMAND_ART',['../driver__sht31_8c.html#aa419e2d32c6278359d589557d71145a1',1,'driver_sht31.c']]],
-  ['sht31_5fcommand_5fbreak_226',['SHT31_COMMAND_BREAK',['../driver__sht31_8c.html#a2815eb2e08dfc223e69ff5c2150cb366',1,'driver_sht31.c']]],
-  ['sht31_5fcommand_5fclear_5fstatus_227',['SHT31_COMMAND_CLEAR_STATUS',['../driver__sht31_8c.html#a4c4ba586ac89e544b6a1582e77f08973',1,'driver_sht31.c']]],
-  ['sht31_5fcommand_5ffetch_5fdata_228',['SHT31_COMMAND_FETCH_DATA',['../driver__sht31_8c.html#a1d64bb0050b88b927b24820c4c2b2d96',1,'driver_sht31.c']]],
-  ['sht31_5fcommand_5fheater_5fdisable_229',['SHT31_COMMAND_HEATER_DISABLE',['../driver__sht31_8c.html#ab1122f920127e336167e42d22415369f',1,'driver_sht31.c']]],
-  ['sht31_5fcommand_5fheater_5fenable_230',['SHT31_COMMAND_HEATER_ENABLE',['../driver__sht31_8c.html#af92ea28cbb567cf83180eec811da10aa',1,'driver_sht31.c']]],
-  ['sht31_5fcommand_5fread_5fstatus_231',['SHT31_COMMAND_READ_STATUS',['../driver__sht31_8c.html#aa00e6507b8b23d643bc4fd53888b796e',1,'driver_sht31.c']]],
-  ['sht31_5fcommand_5fsoft_5freset_232',['SHT31_COMMAND_SOFT_RESET',['../driver__sht31_8c.html#a247e35620f11b12fbb926d02b1f89a0f',1,'driver_sht31.c']]],
-  ['supply_5fvoltage_5fmax_233',['SUPPLY_VOLTAGE_MAX',['../driver__sht31_8c.html#a68eba8b601afe11f1b871d944976c035',1,'driver_sht31.c']]],
-  ['supply_5fvoltage_5fmin_234',['SUPPLY_VOLTAGE_MIN',['../driver__sht31_8c.html#aac8d8cbd899667d609787ef4cf37054d',1,'driver_sht31.c']]]
+  ['sht31_5fcommand_5fart_282',['SHT31_COMMAND_ART',['../driver__sht31_8c.html#aa419e2d32c6278359d589557d71145a1',1,'driver_sht31.c']]],
+  ['sht31_5fcommand_5fbreak_283',['SHT31_COMMAND_BREAK',['../driver__sht31_8c.html#a2815eb2e08dfc223e69ff5c2150cb366',1,'driver_sht31.c']]],
+  ['sht31_5fcommand_5fclear_5fstatus_284',['SHT31_COMMAND_CLEAR_STATUS',['../driver__sht31_8c.html#a4c4ba586ac89e544b6a1582e77f08973',1,'driver_sht31.c']]],
+  ['sht31_5fcommand_5ffetch_5fdata_285',['SHT31_COMMAND_FETCH_DATA',['../driver__sht31_8c.html#a1d64bb0050b88b927b24820c4c2b2d96',1,'driver_sht31.c']]],
+  ['sht31_5fcommand_5fget_5fserial_5fnumber_286',['SHT31_COMMAND_GET_SERIAL_NUMBER',['../driver__sht31_8c.html#a9c0d07728616e29939eb30798bdaa5f3',1,'driver_sht31.c']]],
+  ['sht31_5fcommand_5fheater_5fdisable_287',['SHT31_COMMAND_HEATER_DISABLE',['../driver__sht31_8c.html#ab1122f920127e336167e42d22415369f',1,'driver_sht31.c']]],
+  ['sht31_5fcommand_5fheater_5fenable_288',['SHT31_COMMAND_HEATER_ENABLE',['../driver__sht31_8c.html#af92ea28cbb567cf83180eec811da10aa',1,'driver_sht31.c']]],
+  ['sht31_5fcommand_5fread_5fhigh_5falert_5flimit_5fclear_289',['SHT31_COMMAND_READ_HIGH_ALERT_LIMIT_CLEAR',['../driver__sht31_8c.html#a5c9dd8dc98a0c2cf6b8e9ff965d73a75',1,'driver_sht31.c']]],
+  ['sht31_5fcommand_5fread_5fhigh_5falert_5flimit_5fset_290',['SHT31_COMMAND_READ_HIGH_ALERT_LIMIT_SET',['../driver__sht31_8c.html#aa34182eed2887d626dae3a7246fd662f',1,'driver_sht31.c']]],
+  ['sht31_5fcommand_5fread_5flow_5falert_5flimit_5fclear_291',['SHT31_COMMAND_READ_LOW_ALERT_LIMIT_CLEAR',['../driver__sht31_8c.html#a4b2ba7b7029adf742f0acda040372961',1,'driver_sht31.c']]],
+  ['sht31_5fcommand_5fread_5flow_5falert_5flimit_5fset_292',['SHT31_COMMAND_READ_LOW_ALERT_LIMIT_SET',['../driver__sht31_8c.html#aeaa98dc4d952c8dc01eaa5a40a52b8e8',1,'driver_sht31.c']]],
+  ['sht31_5fcommand_5fread_5fstatus_293',['SHT31_COMMAND_READ_STATUS',['../driver__sht31_8c.html#aa00e6507b8b23d643bc4fd53888b796e',1,'driver_sht31.c']]],
+  ['sht31_5fcommand_5fsoft_5freset_294',['SHT31_COMMAND_SOFT_RESET',['../driver__sht31_8c.html#a247e35620f11b12fbb926d02b1f89a0f',1,'driver_sht31.c']]],
+  ['sht31_5fcommand_5fwrite_5fhigh_5falert_5flimit_5fclear_295',['SHT31_COMMAND_WRITE_HIGH_ALERT_LIMIT_CLEAR',['../driver__sht31_8c.html#a1a5600e73315793101e432843dd21a37',1,'driver_sht31.c']]],
+  ['sht31_5fcommand_5fwrite_5fhigh_5falert_5flimit_5fset_296',['SHT31_COMMAND_WRITE_HIGH_ALERT_LIMIT_SET',['../driver__sht31_8c.html#aa4ab0319fc373b9eac19fa5eff7d70ff',1,'driver_sht31.c']]],
+  ['sht31_5fcommand_5fwrite_5flow_5falert_5flimit_5fclear_297',['SHT31_COMMAND_WRITE_LOW_ALERT_LIMIT_CLEAR',['../driver__sht31_8c.html#a8e06d4f6134379c797766972cc8282d1',1,'driver_sht31.c']]],
+  ['sht31_5fcommand_5fwrite_5flow_5falert_5flimit_5fset_298',['SHT31_COMMAND_WRITE_LOW_ALERT_LIMIT_SET',['../driver__sht31_8c.html#a77e2e26cd4b8ec103e8c15454694584e',1,'driver_sht31.c']]],
+  ['supply_5fvoltage_5fmax_299',['SUPPLY_VOLTAGE_MAX',['../driver__sht31_8c.html#a68eba8b601afe11f1b871d944976c035',1,'driver_sht31.c']]],
+  ['supply_5fvoltage_5fmin_300',['SUPPLY_VOLTAGE_MIN',['../driver__sht31_8c.html#aac8d8cbd899667d609787ef4cf37054d',1,'driver_sht31.c']]]
 ];

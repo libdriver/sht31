@@ -6,5 +6,6 @@ var driver__sht31__interface__template_8c =
     [ "sht31_interface_iic_init", "group__sht31__interface__driver.html#ga414f4ac23cdf0fd73fb549589c8f9481", null ],
     [ "sht31_interface_iic_read_address16", "group__sht31__interface__driver.html#ga86f9b6b4123a9767b29102355a36f7ed", null ],
     [ "sht31_interface_iic_scl_read_address16", "group__sht31__interface__driver.html#gaf268462961798d2ef4dfa6f06be197af", null ],
-    [ "sht31_interface_iic_write_address16", "group__sht31__interface__driver.html#gad86378e4257a320e96503f571ef7166c", null ]
+    [ "sht31_interface_iic_write_address16", "group__sht31__interface__driver.html#gad86378e4257a320e96503f571ef7166c", null ],
+    [ "sht31_interface_receive_callback", "group__sht31__interface__driver.html#gaf8a047faac44bf58ac222eb21f00a003", null ]
 ];
