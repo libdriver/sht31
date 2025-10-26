@@ -130,9 +130,9 @@ find_package(sht31 REQUIRED)
    ```
 10. Run sht31 sn function.
 
-   ```shell
+    ```shell
    sht31 (-e sn | --example=sn) [--addr=<0 | 1>]
-   ```
+    ```
 
 #### 3.2 Command Example
 
